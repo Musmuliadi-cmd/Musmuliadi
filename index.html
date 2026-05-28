@@ -1136,5 +1136,92 @@ if (window.netlifyIdentity) {
   });
 }
 </script>
+
+<script>
+// ═══════════════════════════════════════
+//  LOADER ARTIKEL DARI GITHUB
+//  Membaca file artikel/*.json dari repo
+// ═══════════════════════════════════════
+(async function loadArticles() {
+  const REPO   = 'Musmuliadi-cmd/Musmuliadi';
+  const BRANCH = 'main';
+  const RAW    = 'https://raw.githubusercontent.com/' + REPO + '/' + BRANCH;
+  const API    = 'https://api.github.com/repos/' + REPO + '/contents/artikel?ref=' + BRANCH;
+
+  const grid  = document.getElementById('artikelGrid');
+  const empty = document.getElementById('emptyArticles');
+  if (!grid) return;
+
+  try {
+    const res = await fetch(API);
+    if (!res.ok) { showEmpty(); return; }
+    const files = await res.json();
+    if (!Array.isArray(files) || files.length === 0) { showEmpty(); return; }
+
+    // Ambil hanya file .json, urutkan terbaru dulu
+    const jsonFiles = files
+      .filter(f => f.name.endsWith('.json'))
+      .sort((a, b) => b.name.localeCompare(a.name));
+
+    if (jsonFiles.length === 0) { showEmpty(); return; }
+
+    // Fetch semua artikel
+    const articles = await Promise.all(
+      jsonFiles.map(f => fetch(RAW + '/artikel/' + f.name).then(r => r.json()).catch(() => null))
+    );
+
+    const terbit = articles.filter(a => a && a.status === 'terbit');
+    if (terbit.length === 0) { showEmpty(); return; }
+
+    // Sembunyikan empty state
+    if (empty) empty.style.display = 'none';
+
+    // Render kartu artikel
+    grid.innerHTML = terbit.map((a, i) => `
+      <a href="artikel.html?id=${escAttr(a.id)}" class="article-card">
+        <div class="article-thumb thumb-${(i % 3) + 1}">
+          <div class="thumb-pattern"></div>
+          <span class="thumb-num">0${i + 1}</span>
+          <div class="article-cat">${escHtml(a.kategori)}</div>
+          <div class="thumb-accent"></div>
+        </div>
+        <div class="article-body">
+          <div class="article-meta">
+            <span>${escHtml(formatTgl(a.tanggal))}</span>
+            <div class="article-meta-dot"></div>
+            <span>${escHtml(String(a.menit || 5))} menit baca</span>
+          </div>
+          <h3 class="article-title">${escHtml(a.judul)}</h3>
+          <p class="article-excerpt">${escHtml(a.kutipan)}</p>
+          <span class="article-cta">Baca selengkapnya</span>
+        </div>
+      </a>`).join('');
+
+  } catch (e) {
+    showEmpty();
+  }
+
+  function showEmpty() {
+    if (empty) empty.style.display = 'block';
+    grid.innerHTML = '';
+  }
+
+  function escHtml(s) {
+    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+  function escAttr(s) {
+    return String(s||'').replace(/"/g,'&quot;');
+  }
+  function formatTgl(d) {
+    if (!d) return '';
+    try {
+      const bulan = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+      const dt = new Date(d);
+      return dt.getDate() + ' ' + bulan[dt.getMonth()] + ' ' + dt.getFullYear();
+    } catch { return d; }
+  }
+})();
+</script>
+
 </body>
 </html>
