@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artikel — Musmuliadi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0a0f1a;--ink2:#141c2e;--ink3:#1c2840;
+  --red:#c0392b;--red-lt:#e05a4b;
+  --paper:#f5f2ec;--paper2:#ede9e0;--paper3:#e4dfd3;
+  --t1:#0a0f1a;--t2:#3a4560;--t3:#6e7d99;--t4:#a0aec0;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Plus Jakarta Sans',system-ui,sans-serif;
+}
+html{font-size:16px}
+body{font-family:var(--sans);background:var(--paper);color:var(--t1);line-height:1.7}
+
+nav{
+  position:sticky;top:0;z-index:100;height:64px;
+  background:rgba(10,15,26,.97);backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(1.25rem,5vw,3.5rem);
+}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-monogram{width:34px;height:34px;background:var(--red);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.1rem;font-weight:600;color:#fff}
+.nav-name{font-family:var(--serif);font-size:1rem;font-weight:500;color:#f5f2ec}
+.nav-back{font-size:.8rem;color:rgba(245,242,236,.5);text-decoration:none;transition:color .2s}
+.nav-back:hover{color:#f5f2ec}
+
+.hero-art{
+  background:var(--ink);padding:4rem clamp(1.5rem,8vw,6rem) 3rem;
+  position:relative;overflow:hidden;
+}
+.hero-art::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:28px 28px;pointer-events:none;
+}
+.art-cat{
+  display:inline-block;padding:4px 14px;background:var(--red);border-radius:100px;
+  font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:#fff;margin-bottom:1.25rem;
+}
+.art-judul{
+  font-family:var(--serif);font-size:clamp(2rem,5vw,3.5rem);font-weight:500;
+  color:#f5f2ec;line-height:1.15;letter-spacing:-.02em;
+  max-width:820px;margin-bottom:1rem;
+}
+.art-meta{
+  display:flex;align-items:center;gap:10px;
+  font-size:.82rem;color:rgba(245,242,236,.4);font-weight:300;
+}
+.art-meta-dot{width:3px;height:3px;border-radius:50%;background:rgba(245,242,236,.2)}
+
+.art-body-wrap{
+  max-width:720px;margin:0 auto;
+  padding:3rem clamp(1.5rem,5vw,2rem) 5rem;
+}
+
+/* Article typography */
+.art-content{font-size:1.05rem;line-height:1.95;color:var(--t2);font-weight:300}
+.art-content h1,.art-content h2,.art-content h3{
+  font-family:var(--serif);font-weight:500;color:var(--ink);
+  margin:2rem 0 .75rem;line-height:1.2;
+}
+.art-content h1{font-size:2rem}
+.art-content h2{font-size:1.6rem}
+.art-content h3{font-size:1.3rem}
+.art-content p{margin-bottom:1.25rem}
+.art-content strong{font-weight:600;color:var(--ink)}
+.art-content em{font-style:italic}
+.art-content ul,.art-content ol{padding-left:1.5rem;margin-bottom:1.25rem}
+.art-content li{margin-bottom:.4rem}
+.art-content blockquote{
+  border-left:4px solid var(--red);padding:.75rem 1.25rem;
+  background:var(--paper2);margin:1.5rem 0;
+  font-style:italic;color:var(--t2);border-radius:0 6px 6px 0;
+}
+.art-content a{color:var(--red);text-decoration:underline}
+.art-content hr{border:none;border-top:1px solid var(--paper3);margin:2rem 0}
+.art-content code{background:var(--paper2);padding:2px 6px;border-radius:3px;font-size:.9em;font-family:monospace}
+
+.art-footer{
+  border-top:1px solid var(--paper3);padding-top:2rem;margin-top:2rem;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;
+}
+.art-author{display:flex;align-items:center;gap:.75rem}
+.art-author-avatar{
+  width:44px;height:44px;border-radius:50%;background:var(--ink);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:1.2rem;font-weight:600;color:#fff;flex-shrink:0;
+  overflow:hidden;
+}
+.art-author-avatar img{width:100%;height:100%;object-fit:cover}
+.art-author-name{font-weight:600;font-size:.9rem;color:var(--ink)}
+.art-author-role{font-size:.78rem;color:var(--t3);font-weight:300}
+.back-btn{
+  padding:10px 22px;background:var(--ink);color:#f5f2ec;
+  border-radius:7px;text-decoration:none;font-size:.82rem;font-weight:500;
+  letter-spacing:.04em;transition:background .2s;
+}
+.back-btn:hover{background:var(--ink2)}
+
+/* Loading */
+.loading{text-align:center;padding:4rem;color:var(--t3);font-size:.9rem}
+.loading-spinner{
+  width:32px;height:32px;border:2px solid var(--paper3);
+  border-top-color:var(--red);border-radius:50%;
+  animation:spin .8s linear infinite;margin:0 auto 1rem;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+footer{
+  background:var(--ink);padding:1.5rem clamp(1.5rem,5vw,3.5rem);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;
+}
+.footer-copy{font-size:.75rem;color:rgba(245,242,236,.3);font-weight:300}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-brand">
+    <div class="nav-monogram">M</div>
+    <span class="nav-name">Musmuliadi</span>
+  </a>
+  <a href="index.html#tulisan" class="nav-back">← Kembali ke Tulisan</a>
+</nav>
+
+<div id="heroArt" class="hero-art" style="display:none">
+  <div style="position:relative;z-index:1;max-width:820px">
+    <span class="art-cat" id="artKat"></span>
+    <h1 class="art-judul" id="artJudul"></h1>
+    <div class="art-meta">
+      <span id="artTgl"></span>
+      <div class="art-meta-dot"></div>
+      <span id="artMenit"></span>
+    </div>
+  </div>
+</div>
+
+<div class="art-body-wrap">
+  <div class="loading" id="loadingState">
+    <div class="loading-spinner"></div>
+    Memuat artikel...
+  </div>
+  <div id="artContent" class="art-content" style="display:none"></div>
+  <div class="art-footer" id="artFooter" style="display:none">
+    <div class="art-author">
+      <div class="art-author-avatar">
+        <img src="foto-profil.webp" alt="Musmuliadi" onerror="this.parentElement.textContent='M'">
+      </div>
+      <div>
+        <div class="art-author-name">Musmuliadi</div>
+        <div class="art-author-role">Aktivis · Penulis · Pengusaha</div>
+      </div>
+    </div>
+    <a href="index.html#tulisan" class="back-btn">← Lihat Tulisan Lainnya</a>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-copy">&copy; 2025 Musmuliadi. Semua hak dilindungi.</span>
+</footer>
+
+<script>
+(async function() {
+  const REPO   = 'Musmuliadi-cmd/Musmuliadi';
+  const BRANCH = 'main';
+  const RAW    = 'https://raw.githubusercontent.com/' + REPO + '/' + BRANCH;
+
+  const params = new URLSearchParams(location.search);
+  const id = params.get('id');
+
+  if (!id) { showError('Artikel tidak ditemukan.'); return; }
+
+  try {
+    const res = await fetch(RAW + '/artikel/' + id + '.json');
+    if (!res.ok) { showError('Artikel tidak ditemukan.'); return; }
+    const art = await res.json();
+
+    // Update page title
+    document.title = art.judul + ' — Musmuliadi';
+
+    // Hero
+    document.getElementById('artKat').textContent  = art.kategori || '';
+    document.getElementById('artJudul').textContent = art.judul || '';
+    document.getElementById('artTgl').textContent   = formatTgl(art.tanggal);
+    document.getElementById('artMenit').textContent = (art.menit || 5) + ' menit baca';
+    document.getElementById('heroArt').style.display = 'block';
+
+    // Content
+    document.getElementById('artContent').innerHTML  = renderMarkdown(art.isi || '');
+    document.getElementById('artContent').style.display = 'block';
+    document.getElementById('artFooter').style.display  = 'flex';
+    document.getElementById('loadingState').style.display = 'none';
+
+  } catch(e) {
+    showError('Gagal memuat artikel. Coba lagi.');
+  }
+
+  function showError(msg) {
+    document.getElementById('loadingState').innerHTML =
+      '<p style="color:var(--t3)">' + msg + '</p><br><a href="index.html" style="color:var(--red)">← Kembali ke beranda</a>';
+  }
+
+  function formatTgl(d) {
+    if (!d) return '';
+    try {
+      const bulan = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+      const dt = new Date(d);
+      return dt.getDate() + ' ' + bulan[dt.getMonth()] + ' ' + dt.getFullYear();
+    } catch { return d; }
+  }
+
+  function renderMarkdown(md) {
+    if (!md) return '';
+    return md
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/^### (.+)$/gm,'<h3>$1</h3>')
+      .replace(/^## (.+)$/gm,'<h2>$1</h2>')
+      .replace(/^# (.+)$/gm,'<h1>$1</h1>')
+      .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+      .replace(/\*(.+?)\*/g,'<em>$1</em>')
+      .replace(/~~(.+?)~~/g,'<del>$1</del>')
+      .replace(/^> (.+)$/gm,'<blockquote>$1</blockquote>')
+      .replace(/^- (.+)$/gm,'<li>$1</li>')
+      .replace(/^[0-9]+\. (.+)$/gm,'<li>$1</li>')
+      .replace(/(<li>.*<\/li>\n?)+/g, s => '<ul>' + s + '</ul>')
+      .replace(/\[(.+?)\]\((.+?)\)/g,'<a href="$2" target="_blank">$1</a>')
+      .replace(/`(.+?)`/g,'<code>$1</code>')
+      .replace(/^---$/gm,'<hr>')
+      .replace(/\n\n+/g,'</p><p>')
+      .replace(/\n/g,'<br>')
+      .replace(/^(?!<)/,'<p>') + '</p>';
+  }
+})();
+</script>
+</body>
+</html>
