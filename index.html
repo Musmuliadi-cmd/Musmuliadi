@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Musmuliadi — Aktivis Sosial, Penulis, Pengusaha, dan Inisiator Gerakan Anak Muda Desa.">
+<title>Musmuliadi — Aktivis · Penulis · Pengusaha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --ink:       #0a0f1a;
+  --ink-2:     #141c2e;
+  --ink-3:     #1c2840;
+  --ink-4:     #243354;
+
+  --paper:     #f5f2ec;
+  --paper-2:   #ede9e0;
+  --paper-3:   #e4dfd3;
+
+  --red:       #c0392b;
+  --red-dk:    #96271f;
+  --red-lt:    #e05a4b;
+  --red-dim:   rgba(192,57,43,0.1);
+
+  --gold:      #b8860b;
+  --gold-lt:   #d4a017;
+
+  --t1: #0a0f1a;
+  --t2: #3a4560;
+  --t3: #6e7d99;
+  --t4: #a0aec0;
+
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans:  'Plus Jakarta Sans', system-ui, sans-serif;
+  --ease:  cubic-bezier(.4,0,.2,1);
+  --ease-out: cubic-bezier(0,.4,.2,1);
+}
+
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--sans);background:var(--paper);color:var(--t1);line-height:1.7;overflow-x:hidden}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--paper-2)}
+::-webkit-scrollbar-thumb{background:var(--red);border-radius:2px}
+
+/* ══════════════════════════════════════
+   NAV
+══════════════════════════════════════ */
+nav {
+  position:fixed;top:0;left:0;right:0;z-index:300;
+  height:68px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(1.25rem,5vw,3.5rem);
+  background:rgba(10,15,26,0.96);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  transition:height .3s var(--ease);
+}
+nav.scrolled{height:58px;background:rgba(10,15,26,0.99)}
+
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.nav-brand-monogram{
+  width:38px;height:38px;border-radius:6px;
+  background:var(--red);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:1.25rem;font-weight:600;
+  color:#fff;letter-spacing:-.02em;
+  flex-shrink:0;
+  transition:background .2s;
+}
+nav.scrolled .nav-brand-monogram{width:34px;height:34px;font-size:1.1rem}
+.nav-brand:hover .nav-brand-monogram{background:var(--red-lt)}
+.nav-brand-name{font-family:var(--serif);font-size:1.1rem;font-weight:500;color:#f5f2ec;letter-spacing:.01em}
+
+.nav-links{display:flex;align-items:center;gap:1.75rem;list-style:none}
+.nav-links a{
+  font-size:.8rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+  color:rgba(245,242,236,.55);text-decoration:none;
+  transition:color .2s;position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;
+  background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .25s var(--ease);
+}
+.nav-links a:hover{color:#f5f2ec}
+.nav-links a:hover::after{transform:scaleX(1)}
+
+.nav-cta{
+  padding:9px 22px !important;
+  background:var(--red) !important;color:#fff !important;
+  border-radius:6px;transition:background .2s !important;
+  letter-spacing:.06em !important;
+}
+.nav-cta:hover{background:var(--red-lt) !important}
+.nav-cta::after{display:none !important}
+
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:4px;flex-direction:column;gap:5px}
+.nav-toggle span{display:block;width:22px;height:1.5px;background:rgba(245,242,236,.6);transition:.3s var(--ease)}
+.nav-toggle.active span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.nav-toggle.active span:nth-child(2){opacity:0}
+.nav-toggle.active span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+/* ══════════════════════════════════════
+   HERO
+══════════════════════════════════════ */
+#hero{
+  min-height:100vh;
+  background:var(--ink);
+  display:flex;align-items:stretch;
+  overflow:hidden;position:relative;
+  padding-top:68px;
+}
+
+/* Halftone-style dot pattern */
+#hero::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle, rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size:28px 28px;
+  pointer-events:none;
+}
+
+/* Red accent bar left */
+#hero::after{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:4px;
+  background:linear-gradient(180deg,var(--red) 0%,transparent 100%);
+}
+
+.hero-inner{
+  display:grid;grid-template-columns:1fr 420px;
+  width:100%;max-width:1280px;margin:0 auto;
+  align-items:center;
+  padding:4rem clamp(1.5rem,6vw,5rem);
+  gap:4rem;position:relative;z-index:1;
+}
+
+/* Left */
+.hero-left{}
+
+.hero-kicker{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--red-lt);margin-bottom:1.75rem;
+  font-weight:500;
+}
+.hero-kicker-dot{width:6px;height:6px;border-radius:50%;background:var(--red);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+
+h1{
+  font-family:var(--serif);
+  font-size:clamp(3rem,5.5vw,5.5rem);
+  font-weight:500;line-height:1.05;
+  color:#f5f2ec;
+  letter-spacing:-.02em;
+  margin-bottom:.75rem;
+}
+h1 span.highlight{
+  font-style:italic;color:var(--red-lt);
+  display:block;
+}
+
+.hero-tagline{
+  font-family:var(--serif);font-size:clamp(1.1rem,2vw,1.35rem);
+  font-style:italic;color:rgba(245,242,236,.45);
+  margin-bottom:1.75rem;line-height:1.5;
+  border-left:2px solid var(--red);padding-left:1rem;
+  max-width:480px;
+}
+
+.hero-desc{
+  font-size:clamp(.9rem,1.4vw,1rem);font-weight:300;
+  color:rgba(245,242,236,.55);max-width:520px;
+  line-height:1.85;margin-bottom:2.5rem;
+}
+
+.hero-roles{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2.5rem}
+.role-pill{
+  padding:5px 14px;
+  border:1px solid rgba(255,255,255,.1);border-radius:100px;
+  font-size:.72rem;font-weight:500;letter-spacing:.08em;
+  color:rgba(245,242,236,.6);
+  transition:border-color .2s,color .2s;
+}
+.role-pill.active{border-color:var(--red);color:var(--red-lt);background:var(--red-dim)}
+.role-pill:hover{border-color:rgba(255,255,255,.25);color:#f5f2ec}
+
+.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap}
+
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 28px;border-radius:7px;
+  font-family:var(--sans);font-size:.85rem;font-weight:600;
+  letter-spacing:.04em;text-decoration:none;
+  cursor:pointer;border:none;
+  transition:all .22s var(--ease);
+}
+.btn-red{background:var(--red);color:#fff;box-shadow:0 4px 24px rgba(192,57,43,.35)}
+.btn-red:hover{background:var(--red-lt);transform:translateY(-2px);box-shadow:0 8px 32px rgba(192,57,43,.45)}
+.btn-outline{background:transparent;color:rgba(245,242,236,.75);border:1.5px solid rgba(255,255,255,.15)}
+.btn-outline:hover{border-color:rgba(255,255,255,.4);color:#f5f2ec;background:rgba(255,255,255,.05)}
+
+.btn-sm{padding:10px 20px;font-size:.8rem}
+
+/* Right — Photo */
+.hero-right{position:relative;display:flex;align-items:center;justify-content:center}
+
+.photo-frame{
+  position:relative;width:340px;max-width:100%;
+}
+
+.photo-box{
+  width:100%;aspect-ratio:3/4;
+  background:var(--ink-3);
+  border-radius:4px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.08);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.photo-box img{width:100%;height:100%;object-fit:cover;object-position:top}
+.photo-placeholder-icon{
+  font-family:var(--serif);font-size:7rem;font-weight:500;
+  color:rgba(255,255,255,.06);font-style:italic;
+  user-select:none;
+}
+
+/* Red corner accent */
+.photo-frame::before{
+  content:'';position:absolute;top:-8px;right:-8px;
+  width:60px;height:60px;
+  border-top:3px solid var(--red);border-right:3px solid var(--red);
+  border-radius:0 4px 0 0;
+  pointer-events:none;
+}
+.photo-frame::after{
+  content:'';position:absolute;bottom:-8px;left:-8px;
+  width:60px;height:60px;
+  border-bottom:3px solid var(--red);border-left:3px solid var(--red);
+  border-radius:0 0 0 4px;
+  pointer-events:none;
+}
+
+.photo-caption{
+  position:absolute;bottom:-20px;left:0;right:0;
+  text-align:center;
+}
+.photo-caption-inner{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--red);color:#fff;
+  padding:6px 18px;border-radius:100px;
+  font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+}
+
+/* Stats strip */
+.hero-stats{
+  display:flex;gap:2.5rem;margin-top:2.5rem;
+  padding-top:2rem;border-top:1px solid rgba(255,255,255,.08);
+}
+.hero-stat-num{
+  font-family:var(--serif);font-size:2rem;font-weight:500;
+  color:#f5f2ec;line-height:1;
+}
+.hero-stat-label{
+  font-size:.72rem;font-weight:400;color:rgba(245,242,236,.4);
+  margin-top:3px;
+}
+
+/* ══════════════════════════════════════
+   SECTION BASE
+══════════════════════════════════════ */
+.section-wrap{padding:clamp(4.5rem,9vw,8rem) clamp(1.5rem,6vw,5rem);max-width:1280px;margin:0 auto}
+
+.section-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:.68rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--red);margin-bottom:.75rem;
+}
+.section-eyebrow::before{content:'';display:block;width:20px;height:2px;background:var(--red)}
+
+h2{
+  font-family:var(--serif);
+  font-size:clamp(2rem,3.8vw,3.2rem);
+  font-weight:500;color:var(--ink);line-height:1.15;
+  letter-spacing:-.02em;margin-bottom:.75rem;
+}
+.section-subtitle{
+  font-size:1rem;font-weight:300;color:var(--t2);
+  max-width:600px;line-height:1.8;margin-bottom:3.5rem;
+}
+
+/* ══════════════════════════════════════
+   ABOUT — IDENTITY SECTION
+══════════════════════════════════════ */
+#tentang{background:var(--paper)}
+
+.identity-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;
+}
+
+.identity-text p{
+  font-size:1.02rem;font-weight:300;color:var(--t2);line-height:1.95;
+  margin-bottom:1.25rem;
+}
+.identity-text strong{font-weight:600;color:var(--ink)}
+
+/* Dimensions — the 5 pillars */
+.pillars{margin-top:2.5rem}
+.pillars-title{
+  font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--t3);font-weight:600;margin-bottom:1.25rem;
+}
+
+.pillar{
+  display:flex;gap:1.25rem;align-items:flex-start;
+  padding:1.1rem 0;
+  border-bottom:1px solid var(--paper-3);
+  transition:opacity .2s;
+}
+.pillar:first-of-type{border-top:1px solid var(--paper-3)}
+.pillar:hover{opacity:.75}
+
+.pillar-icon{
+  width:42px;height:42px;border-radius:8px;flex-shrink:0;
+  background:var(--ink);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;
+}
+.pillar-name{font-weight:600;font-size:.9rem;color:var(--ink);margin-bottom:.2rem}
+.pillar-desc{font-size:.82rem;font-weight:300;color:var(--t3);line-height:1.5}
+
+/* Right col — AMD + quote */
+.identity-right{}
+
+.amd-card{
+  background:var(--ink);border-radius:12px;padding:2rem 2.25rem;
+  position:relative;overflow:hidden;margin-bottom:2rem;
+}
+.amd-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--red),var(--gold-lt));
+}
+.amd-logo-text{
+  font-family:var(--serif);font-size:1.6rem;font-weight:600;
+  font-style:italic;color:#f5f2ec;line-height:1.1;margin-bottom:.5rem;
+}
+.amd-logo-sub{
+  font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--red-lt);font-weight:500;margin-bottom:1.25rem;
+}
+.amd-desc{font-size:.88rem;font-weight:300;color:rgba(245,242,236,.6);line-height:1.8}
+.amd-tag{
+  display:inline-block;margin-top:1.25rem;
+  padding:5px 14px;border:1px solid rgba(192,57,43,.4);border-radius:100px;
+  font-size:.7rem;font-weight:500;color:var(--red-lt);letter-spacing:.08em;
+}
+
+.quote-block{
+  background:var(--paper-2);border-radius:10px;
+  padding:1.75rem 2rem;
+  border-left:4px solid var(--red);
+  position:relative;
+}
+.quote-mark{
+  font-family:var(--serif);font-size:5rem;line-height:.8;
+  color:var(--red);opacity:.15;position:absolute;top:1rem;left:1.5rem;
+  user-select:none;pointer-events:none;
+}
+.quote-text{
+  font-family:var(--serif);font-size:1.15rem;font-style:italic;
+  color:var(--ink);line-height:1.7;position:relative;z-index:1;
+  padding-left:.5rem;
+}
+.quote-attr{
+  margin-top:1rem;font-size:.78rem;font-weight:500;
+  color:var(--red);letter-spacing:.06em;padding-left:.5rem;
+}
+
+/* ══════════════════════════════════════
+   TULISAN — CONTENT HUB
+══════════════════════════════════════ */
+#tulisan{background:var(--ink)}
+
+#tulisan .section-eyebrow{color:var(--red-lt)}
+#tulisan h2{color:#f5f2ec}
+#tulisan .section-subtitle{color:rgba(245,242,236,.45)}
+
+.content-filters{
+  display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2.5rem;
+}
+.filter-btn{
+  padding:6px 18px;border-radius:100px;
+  border:1px solid rgba(255,255,255,.12);
+  font-family:var(--sans);font-size:.75rem;font-weight:500;
+  letter-spacing:.06em;color:rgba(245,242,236,.5);
+  background:transparent;cursor:pointer;
+  transition:all .2s var(--ease);
+}
+.filter-btn.active,
+.filter-btn:hover{
+  border-color:var(--red);color:var(--red-lt);background:var(--red-dim);
+}
+
+.articles-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;
+}
+
+.article-card{
+  background:var(--ink-2);border:1px solid rgba(255,255,255,.06);
+  border-radius:10px;overflow:hidden;
+  display:flex;flex-direction:column;
+  transition:border-color .25s var(--ease),transform .25s var(--ease);
+  text-decoration:none;color:inherit;cursor:pointer;
+}
+.article-card:hover{border-color:rgba(192,57,43,.4);transform:translateY(-4px)}
+
+.article-thumb{
+  height:140px;background:var(--ink-3);
+  position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.thumb-pattern{
+  position:absolute;inset:0;
+  background-image:radial-gradient(circle, rgba(255,255,255,.03) 1px, transparent 1px);
+  background-size:16px 16px;
+}
+.thumb-accent{
+  position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:var(--red);
+}
+.thumb-num{
+  font-family:var(--serif);font-size:3rem;font-style:italic;
+  font-weight:500;color:rgba(255,255,255,.07);position:relative;z-index:1;
+}
+
+.article-cat{
+  position:absolute;top:10px;left:10px;
+  padding:3px 10px;background:var(--red);border-radius:100px;
+  font-size:.62rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#fff;
+}
+
+.article-body{padding:1.25rem 1.4rem 1.6rem;flex:1;display:flex;flex-direction:column}
+
+.article-meta{
+  display:flex;align-items:center;gap:8px;
+  font-size:.7rem;color:rgba(245,242,236,.3);margin-bottom:.6rem;font-weight:400;
+}
+.article-meta-dot{width:3px;height:3px;border-radius:50%;background:rgba(245,242,236,.2)}
+
+.article-title{
+  font-family:var(--serif);font-size:1.08rem;font-weight:500;
+  color:#f5f2ec;line-height:1.4;margin-bottom:.6rem;flex:1;
+}
+
+.article-excerpt{
+  font-size:.8rem;font-weight:300;color:rgba(245,242,236,.4);
+  line-height:1.65;margin-bottom:1.1rem;
+}
+
+.article-cta{
+  font-size:.72rem;font-weight:600;letter-spacing:.08em;color:var(--red-lt);
+  display:flex;align-items:center;gap:5px;
+  transition:gap .2s;
+}
+.article-card:hover .article-cta{gap:9px}
+.article-cta::after{content:'→'}
+
+.content-more{text-align:center;margin-top:2.5rem}
+
+/* ══════════════════════════════════════
+   BISNIS
+══════════════════════════════════════ */
+#bisnis{background:var(--paper-2)}
+
+.bisnis-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+
+.bisnis-card{
+  background:var(--paper);border:1px solid var(--paper-3);
+  border-radius:10px;padding:1.5rem 1.4rem 1.75rem;
+  transition:border-color .2s,transform .2s,box-shadow .2s;
+  position:relative;overflow:hidden;
+}
+.bisnis-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--red);transform:scaleX(0);transform-origin:left;
+  transition:transform .3s var(--ease);
+}
+.bisnis-card:hover::before{transform:scaleX(1)}
+.bisnis-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.1);border-color:var(--paper-3)}
+
+.bisnis-icon{font-size:2rem;margin-bottom:1rem;display:block}
+.bisnis-name{
+  font-family:var(--serif);font-size:1.15rem;font-weight:500;
+  color:var(--ink);margin-bottom:.35rem;line-height:1.2;
+}
+.bisnis-desc{font-size:.82rem;font-weight:300;color:var(--t3);line-height:1.6}
+
+/* ══════════════════════════════════════
+   SURVEI & RISET
+══════════════════════════════════════ */
+#riset{
+  background:var(--ink-2);
+  position:relative;overflow:hidden;
+}
+#riset::before{
+  content:'';position:absolute;right:-200px;top:50%;transform:translateY(-50%);
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(192,57,43,.07) 0%,transparent 70%);
+  pointer-events:none;
+}
+
+#riset h2{color:#f5f2ec}
+#riset .section-eyebrow{color:var(--red-lt)}
+#riset .section-subtitle{color:rgba(245,242,236,.4)}
+
+.riset-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:5rem;align-items:center}
+
+.riset-features{display:flex;flex-direction:column;gap:1.25rem}
+.riset-feat{
+  display:flex;gap:1.25rem;align-items:flex-start;
+  padding:1.25rem;background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.07);border-radius:10px;
+  transition:border-color .2s;
+}
+.riset-feat:hover{border-color:rgba(192,57,43,.35)}
+.riset-feat-icon{
+  width:40px;height:40px;flex-shrink:0;
+  background:var(--red-dim);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;
+}
+.riset-feat-title{font-weight:600;font-size:.9rem;color:#f5f2ec;margin-bottom:.2rem}
+.riset-feat-desc{font-size:.82rem;font-weight:300;color:rgba(245,242,236,.45);line-height:1.6}
+
+.riset-cta-box{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;padding:2.25rem 2rem;
+  text-align:center;
+}
+.riset-cta-box h3{
+  font-family:var(--serif);font-size:1.6rem;font-weight:500;font-style:italic;
+  color:#f5f2ec;margin-bottom:.75rem;
+}
+.riset-cta-box p{font-size:.9rem;font-weight:300;color:rgba(245,242,236,.45);line-height:1.8;margin-bottom:1.75rem}
+
+/* ══════════════════════════════════════
+   KONTAK
+══════════════════════════════════════ */
+#kontak{background:var(--paper)}
+
+.kontak-grid{display:grid;grid-template-columns:1fr 1.35fr;gap:5rem;align-items:start}
+
+.kontak-info h2{margin-bottom:.75rem}
+.kontak-info p{font-size:.97rem;font-weight:300;color:var(--t2);line-height:1.9;margin-bottom:1.5rem}
+
+.kontak-channels{display:flex;flex-direction:column;gap:.75rem;margin-bottom:2rem}
+.kontak-ch{
+  display:flex;align-items:center;gap:.75rem;
+  font-size:.88rem;color:var(--t2);font-weight:400;
+}
+.kontak-ch-icon{
+  width:36px;height:36px;border-radius:8px;background:var(--paper-2);
+  display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;
+}
+
+.kontak-secure{
+  display:flex;gap:10px;align-items:flex-start;
+  padding:1rem 1.25rem;background:var(--paper-2);
+  border-radius:8px;border:1px solid var(--paper-3);
+  font-size:.78rem;color:var(--t3);line-height:1.6;
+}
+.kontak-secure strong{color:var(--ink)}
+
+/* Form */
+.form-wrap{
+  background:#fff;border:1px solid var(--paper-3);
+  border-radius:14px;padding:2.25rem 2.25rem 2.5rem;
+  box-shadow:0 4px 40px rgba(0,0,0,.06);
+}
+
+.form-label{
+  display:block;font-size:.72rem;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--t3);margin-bottom:.45rem;
+}
+
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.form-group{margin-bottom:1rem}
+
+.form-input,.form-textarea{
+  width:100%;padding:11px 14px;
+  background:var(--paper);border:1.5px solid var(--paper-3);
+  border-radius:8px;
+  font-family:var(--sans);font-size:.9rem;font-weight:300;color:var(--ink);
+  outline:none;transition:border-color .2s,background .2s;
+}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--t4)}
+.form-input:focus,.form-textarea:focus{
+  border-color:var(--red);background:#fff;
+}
+.form-textarea{resize:vertical;min-height:120px;line-height:1.65}
+
+.form-submit{
+  width:100%;padding:13px;margin-top:.25rem;
+  background:var(--red);color:#fff;border:none;
+  border-radius:8px;font-family:var(--sans);
+  font-size:.9rem;font-weight:600;letter-spacing:.04em;
+  cursor:pointer;
+  transition:background .2s,transform .15s,box-shadow .2s;
+  box-shadow:0 4px 20px rgba(192,57,43,.3);
+}
+.form-submit:hover{background:var(--red-lt);transform:translateY(-1px);box-shadow:0 8px 28px rgba(192,57,43,.4)}
+.form-notice{margin-top:.65rem;font-size:.7rem;color:var(--t4);text-align:center}
+
+.form-success{display:none;text-align:center;padding:2rem 1rem}
+.form-success-emoji{font-size:2.5rem;margin-bottom:.75rem}
+.form-success h3{font-family:var(--serif);font-size:1.5rem;font-weight:500;color:var(--ink);margin-bottom:.5rem}
+.form-success p{font-size:.88rem;color:var(--t3);font-weight:300}
+
+/* ══════════════════════════════════════
+   FOOTER
+══════════════════════════════════════ */
+footer{
+  background:var(--ink);
+  padding:3rem clamp(1.5rem,6vw,5rem) 2rem;
+}
+
+.footer-top{
+  display:grid;grid-template-columns:1.5fr 1fr 1fr;
+  gap:3rem;padding-bottom:2.5rem;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  margin-bottom:1.75rem;
+}
+
+.footer-brand-mark{
+  display:flex;align-items:center;gap:12px;margin-bottom:.75rem;text-decoration:none;
+}
+.footer-monogram{
+  width:42px;height:42px;border-radius:8px;background:var(--red);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:1.35rem;font-weight:600;color:#fff;
+}
+.footer-name{font-family:var(--serif);font-size:1.2rem;font-weight:500;color:#f5f2ec}
+.footer-tagline{font-size:.82rem;font-weight:300;color:rgba(245,242,236,.4);line-height:1.7;max-width:300px}
+
+.footer-col-title{
+  font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(245,242,236,.3);font-weight:600;margin-bottom:1rem;
+}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+.footer-links a{
+  font-size:.85rem;font-weight:300;color:rgba(245,242,236,.5);
+  text-decoration:none;transition:color .2s;
+}
+.footer-links a:hover{color:#f5f2ec}
+
+.footer-bottom{
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;
+}
+.footer-copy{font-size:.75rem;font-weight:300;color:rgba(245,242,236,.3)}
+.footer-tech{font-size:.72rem;font-weight:300;color:rgba(245,242,236,.2)}
+.footer-tech a{color:rgba(245,242,236,.3);text-decoration:none;transition:color .2s}
+.footer-tech a:hover{color:rgba(245,242,236,.6)}
+
+.social-row{display:flex;gap:.6rem}
+.social-btn{
+  width:38px;height:38px;border-radius:8px;
+  border:1px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(245,242,236,.45);text-decoration:none;
+  transition:all .2s;
+}
+.social-btn:hover{border-color:var(--red);color:var(--red-lt);background:var(--red-dim)}
+.social-btn svg{width:17px;height:17px;fill:currentColor}
+
+/* ══════════════════════════════════════
+   REVEAL ANIMATION
+══════════════════════════════════════ */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.rv.on{opacity:1;transform:none}
+.rv-d1{transition-delay:.1s}.rv-d2{transition-delay:.2s}.rv-d3{transition-delay:.3s}.rv-d4{transition-delay:.4s}
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+@media(max-width:1024px){
+  .hero-inner{grid-template-columns:1fr}
+  .hero-right{display:none}
+  .identity-grid{grid-template-columns:1fr;gap:3rem}
+  .bisnis-grid{grid-template-columns:repeat(2,1fr)}
+  .riset-grid{grid-template-columns:1fr;gap:2.5rem}
+  .kontak-grid{grid-template-columns:1fr;gap:2.5rem}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .articles-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:680px){
+  .nav-links{
+    display:none;flex-direction:column;
+    position:fixed;top:68px;left:0;right:0;
+    background:rgba(10,15,26,.98);backdrop-filter:blur(20px);
+    border-bottom:1px solid rgba(255,255,255,.06);
+    padding:1.5rem;gap:1.25rem;
+  }
+  .nav-links.open{display:flex}
+  .nav-links a{font-size:.95rem}
+  .nav-toggle{display:flex}
+  .articles-grid{grid-template-columns:1fr}
+  .bisnis-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;align-items:flex-start}
+  .hero-stats{gap:1.5rem}
+}
+</style>
+  <!-- Netlify Identity untuk login admin -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+
+<!-- ═══════ NAV ═══════ -->
+<nav id="mainNav">
+  <a href="#hero" class="nav-brand">
+    <div class="nav-brand-monogram">M</div>
+    <span class="nav-brand-name">Musmuliadi</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#tentang" onclick="closeNav()">Tentang</a></li>
+    <li><a href="#tulisan" onclick="closeNav()">Tulisan</a></li>
+    <li><a href="#bisnis" onclick="closeNav()">Bisnis</a></li>
+    <li><a href="#riset" onclick="closeNav()">Riset</a></li>
+    <li><a href="#kontak" onclick="closeNav()" class="nav-cta">Kolaborasi</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-kicker">
+        <span class="hero-kicker-dot"></span>
+        Tokoh Publik · Aktivis · Pengusaha
+      </div>
+      <h1>
+        Musmuliadi
+        <span class="highlight">Suara, Aksi,<br>dan Dampak.</span>
+      </h1>
+      <p class="hero-tagline">
+        "Saya percaya bahwa perubahan dimulai dari desa, digerakkan oleh anak muda, dan ditopang oleh kolaborasi lintas sektor."
+      </p>
+      <p class="hero-desc">Aktivis sosial kemanusiaan, penulis, pengusaha multi-lini, penggiat politik, dan inisiator <strong style="color:#f5f2ec;font-weight:600">Gerakan Anak Muda Desa</strong>. Website ini adalah ruang berbagi gagasan, karya, dan jembatan kolaborasi.</p>
+      <div class="hero-roles">
+        <span class="role-pill active">✍️ Penulis & Opini</span>
+        <span class="role-pill active">🎤 Public Speaker</span>
+        <span class="role-pill active">🌾 Anak Muda Desa</span>
+        <span class="role-pill">⚖️ Aktivis Politik</span>
+        <span class="role-pill">🏗️ Pengusaha</span>
+        <span class="role-pill">📊 Survei & Riset</span>
+      </div>
+      <div class="hero-ctas">
+        <a href="#kontak" class="btn btn-red">Mari Berkolaborasi →</a>
+        <a href="#tulisan" class="btn btn-outline">Baca Tulisan Saya</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-num">10+</div>
+          <div class="hero-stat-label">Tahun aktivisme</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">4</div>
+          <div class="hero-stat-label">Lini bisnis</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">∞</div>
+          <div class="hero-stat-label">Semangat berbagi</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="photo-frame">
+        <div class="photo-box">
+          <!-- Ganti dengan foto asli: <img src="foto-musmuliadi.jpg" alt="Musmuliadi"> -->
+          <img src="foto-profil.webp" alt="Musmuliadi — Foto Profil" style="width:100%;height:100%;object-fit:cover;object-position:top center;">
+        </div>
+        <div class="photo-caption">
+          <div class="photo-caption-inner">✦ Musmuliadi</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ TENTANG ═══════ -->
+<section id="tentang">
+  <div class="section-wrap">
+    <div class="identity-grid">
+      <div class="identity-text">
+        <div class="section-eyebrow rv">Tentang Saya</div>
+        <h2 class="rv">Satu nama,<br>banyak dimensi.</h2>
+        <div class="rv">
+          <p>Saya <strong>Musmuliadi</strong> — aktivis sosial dan kemanusiaan yang percaya bahwa setiap suara memiliki kekuatan untuk menggerakkan perubahan. Dengan kemampuan menulis, riset, dan public speaking, saya hadir di ruang-ruang diskusi publik dengan gagasan yang terukur dan berbasis data.</p>
+          <p>Selain aktif di dunia <strong>politik dan kepemudaan</strong>, saya juga seorang pengusaha yang bergerak di berbagai sektor — dari pertambangan, konstruksi, ekspedisi, hingga perdagangan umum. Saya percaya bahwa pemberdayaan ekonomi dan advokasi sosial harus berjalan beriringan.</p>
+          <p>Di website ini, Anda bisa menemukan <strong>tulisan, opini, studi kasus</strong>, dan pemikiran saya tentang berbagai isu — mulai dari kepemudaan, pembangunan desa, politik, hingga dunia bisnis.</p>
+        </div>
+        <div class="pillars rv rv-d1">
+          <div class="pillars-title">Lima Dimensi Saya</div>
+          <div class="pillar">
+            <div class="pillar-icon">✍️</div>
+            <div><div class="pillar-name">Penulis & Pemikir</div><div class="pillar-desc">Aktif menulis di berbagai media digital — opini, analisis, dan tanggapan isu terkini.</div></div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">🎤</div>
+            <div><div class="pillar-name">Public Speaker</div><div class="pillar-desc">Berpengalaman berbicara di forum nasional, seminar, dan diskusi publik.</div></div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">⚖️</div>
+            <div><div class="pillar-name">Aktivis & Politisi</div><div class="pillar-desc">Advokasi sosial kemanusiaan dan keterlibatan aktif di arena politik untuk kepentingan rakyat.</div></div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">🏗️</div>
+            <div><div class="pillar-name">Pengusaha Multi-Lini</div><div class="pillar-desc">Membangun usaha di sektor pertambangan, konstruksi, ekspedisi, dan perdagangan.</div></div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">📊</div>
+            <div><div class="pillar-name">Peneliti & Survei</div><div class="pillar-desc">Memimpin lembaga survei dan riset untuk mendukung pengambilan keputusan berbasis data.</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="identity-right">
+        <div class="amd-card rv">
+          <div class="amd-logo-text">Anak Muda Desa</div>
+          <div class="amd-logo-sub">Gerakan Nasional</div>
+          <p class="amd-desc">Sebuah gerakan yang saya inisiasi untuk memberdayakan dan menggerakkan pemuda di pedesaan Indonesia — membangun kapasitas, memperluas jejaring, dan menyuarakan kepentingan anak muda desa di tingkat nasional.</p>
+          <span class="amd-tag">🌾 Inisiator & Penggerak</span>
+        </div>
+        <div class="quote-block rv rv-d1">
+          <div class="quote-mark">"</div>
+          <p class="quote-text">Desa bukan hanya tempat lahir — ia adalah sumber kekuatan, identitas, dan masa depan bangsa. Anak muda desalah yang akan menentukan ke mana Indonesia melangkah.</p>
+          <div class="quote-attr">— Musmuliadi</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ TULISAN ═══════ -->
+<section id="tulisan">
+  <div class="section-wrap">
+    <div class="section-eyebrow rv">Tulisan & Opini</div>
+    <h2 class="rv" style="color:#f5f2ec">Gagasan yang saya<br>bagikan ke publik.</h2>
+    <p class="section-subtitle rv">Opini, analisis, studi kasus, dan tanggapan atas berbagai isu — dari kepemudaan hingga politik dan bisnis.</p>
+    <div class="content-filters rv">
+      <button class="filter-btn active">Semua</button>
+      <button class="filter-btn">Opini</button>
+      <button class="filter-btn">Kepemudaan</button>
+      <button class="filter-btn">Politik</button>
+      <button class="filter-btn">Bisnis</button>
+      <button class="filter-btn">Kemanusiaan</button>
+    </div>
+    <div class="articles-grid" id="artikelGrid">
+      <!-- Artikel akan tampil di sini -->
+    </div>
+    <div class="content-more rv" id="emptyArticles" style="text-align:center;padding:3rem 0">
+      <p style="font-size:.95rem;color:rgba(245,242,236,.3);font-weight:300;font-style:italic">Konten segera hadir...</p>
+    </div>  </div>
+</section>
+
+<!-- ═══════ BISNIS ═══════ -->
+<section id="bisnis">
+  <div class="section-wrap">
+    <div class="section-eyebrow rv">Portofolio Bisnis</div>
+    <h2 class="rv">Usaha yang saya bangun<br>dengan prinsip.</h2>
+    <p class="section-subtitle rv">Bisnis yang saya jalankan bukan hanya tentang profit — melainkan tentang menciptakan nilai, membuka lapangan kerja, dan berkontribusi pada pembangunan.</p>
+    <div class="bisnis-grid">
+      <div class="bisnis-card rv rv-d1">
+        <span class="bisnis-icon">⛏️</span>
+        <div class="bisnis-name">Pertambangan</div>
+        <p class="bisnis-desc">Bergerak di sektor pertambangan dengan komitmen pada praktik yang bertanggung jawab dan berkelanjutan.</p>
+      </div>
+      <div class="bisnis-card rv rv-d2">
+        <span class="bisnis-icon">🏗️</span>
+        <div class="bisnis-name">Suplai Material Konstruksi</div>
+        <p class="bisnis-desc">Penyedia material bangunan berkualitas untuk proyek infrastruktur, perumahan, dan konstruksi skala besar.</p>
+      </div>
+      <div class="bisnis-card rv rv-d3">
+        <span class="bisnis-icon">🚚</span>
+        <div class="bisnis-name">Jasa Ekspedisi</div>
+        <p class="bisnis-desc">Layanan pengiriman dan logistik yang handal, menjangkau berbagai wilayah termasuk daerah terpencil.</p>
+      </div>
+      <div class="bisnis-card rv rv-d4">
+        <span class="bisnis-icon">📦</span>
+        <div class="bisnis-name">Perdagangan Umum</div>
+        <p class="bisnis-desc">Distribusi dan perdagangan berbagai komoditas dan barang kebutuhan yang mendukung perekonomian lokal.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ RISET ═══════ -->
+<section id="riset">
+  <div class="section-wrap">
+    <div class="riset-grid">
+      <div>
+        <div class="section-eyebrow rv">Lembaga Survei & Riset</div>
+        <h2 class="rv" style="color:#f5f2ec">Keputusan terbaik<br>lahir dari data.</h2>
+        <p class="section-subtitle rv">Saya memimpin lembaga survei yang berkomitmen menghadirkan data akurat sebagai fondasi kebijakan, strategi bisnis, dan advokasi sosial.</p>
+        <div class="riset-features">
+          <div class="riset-feat rv rv-d1">
+            <div class="riset-feat-icon">📊</div>
+            <div>
+              <div class="riset-feat-title">Survei Opini Publik</div>
+              <div class="riset-feat-desc">Pengukuran persepsi masyarakat terhadap isu politik, sosial, dan kebijakan publik secara metodis.</div>
+            </div>
+          </div>
+          <div class="riset-feat rv rv-d2">
+            <div class="riset-feat-icon">🔬</div>
+            <div>
+              <div class="riset-feat-title">Riset Sosial & Ekonomi</div>
+              <div class="riset-feat-desc"></div>
+            </div>
+          </div>
+          <div class="riset-feat rv rv-d3">
+            <div class="riset-feat-icon">🗳️</div>
+            <div>
+              <div class="riset-feat-title">Riset Kepemiluan & Politik</div>
+              <div class="riset-feat-desc"></div>
+            </div>
+          </div>
+          <div class="riset-feat rv rv-d4">
+            <div class="riset-feat-icon">📋</div>
+            <div>
+              <div class="riset-feat-title">Kajian & Laporan</div>
+              <div class="riset-feat-desc"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="riset-cta-box rv">
+          <h3>Butuh data<br>yang bisa dipercaya?</h3>
+          <p>Kami melayani kebutuhan survei dan riset untuk lembaga pemerintah, partai politik, organisasi masyarakat, dan korporasi. Diskusikan kebutuhan Anda dengan tim kami.</p>
+          <a href="#kontak" class="btn btn-red btn-sm">Konsultasikan Kebutuhan →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ KONTAK ═══════ -->
+<section id="kontak">
+  <div class="section-wrap">
+    <div class="kontak-grid">
+      <div class="kontak-info">
+        <div class="section-eyebrow rv">Kolaborasi</div>
+        <h2 class="rv">Terhubung &amp;<br>berkolaborasi.</h2>
+        <p class="rv">Saya terbuka untuk kolaborasi lintas sektor — dari diskusi publik, penulisan bersama, survei, bisnis, hingga gerakan sosial. Setiap gagasan besar dimulai dari percakapan kecil.</p>
+        <div class="kontak-channels rv">
+          <div class="kontak-ch"><div class="kontak-ch-icon">📧</div> musmuliadiofficial@gmail.com</div>
+          <div class="kontak-ch"><div class="kontak-ch-icon">📱</div> Tersedia via WhatsApp</div>
+          <div class="kontak-ch"><div class="kontak-ch-icon">📍</div> Indonesia</div>
+        </div>
+        <div class="kontak-secure rv rv-d1">
+          <span>🔒</span>
+          <span>Pesan dikirim via <strong>Formspree</strong> — terenkripsi dan langsung ke inbox saya. Tidak tersimpan di halaman ini.</span>
+        </div>
+      </div>
+
+      <!--
+      ╔══════════════════════════════════════════╗
+      ║  SETUP FORMSPREE (Gratis)                ║
+      ║  1. Daftar di https://formspree.io       ║
+      ║  2. Buat form baru → masukkan email Anda ║
+      ║  3. Salin endpoint Anda                  ║
+      ║  4. Ganti ENDPOINT_ANDA di bawah         ║
+      ╚══════════════════════════════════════════╝
+      -->
+      <div class="form-wrap rv rv-d1">
+        <form id="contactForm" action="https://formspree.io/f/ENDPOINT_ANDA" method="POST">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="nama">Nama</label>
+              <input type="text" id="nama" name="nama" class="form-input" placeholder="Nama lengkap Anda" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="email">Email</label>
+              <input type="email" id="email" name="email" class="form-input" placeholder="email@anda.com" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="subjek">Subjek</label>
+            <input type="text" id="subjek" name="subjek" class="form-input" placeholder="Topik kolaborasi atau pesan Anda" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="pesan">Pesan</label>
+            <textarea id="pesan" name="pesan" class="form-textarea" placeholder="Ceritakan maksud, ide kolaborasi, atau pertanyaan Anda..." required></textarea>
+          </div>
+          <!-- Honeypot anti-spam -->
+          <input type="text" name="_gotcha" style="display:none">
+          <button type="submit" class="form-submit" id="submitBtn">Kirim Pesan</button>
+          <p class="form-notice">🔒 Pesan Anda bersifat privat dan tidak dipublikasikan.</p>
+        </form>
+        <div class="form-success" id="formSuccess">
+          <div class="form-success-emoji">✅</div>
+          <h3>Pesan terkirim!</h3>
+          <p>Terima kasih telah menghubungi saya.<br>Saya akan merespons dalam 1–2 hari kerja.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <a href="#hero" class="footer-brand-mark">
+        <div class="footer-monogram">M</div>
+        <span class="footer-name">Musmuliadi</span>
+      </a>
+      <p class="footer-tagline">Aktivis Sosial · Penulis · Pengusaha · Inisiator Anak Muda Desa · Penggiat Politik</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Navigasi</div>
+      <ul class="footer-links">
+        <li><a href="#tentang">Tentang Saya</a></li>
+        <li><a href="#tulisan">Tulisan & Opini</a></li>
+        <li><a href="#bisnis">Portofolio Bisnis</a></li>
+        <li><a href="#riset">Survei & Riset</a></li>
+        <li><a href="#kontak">Kolaborasi</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Media Sosial</div>
+      <div class="social-row" style="margin-bottom:1rem">
+        <a href="https://www.instagram.com/musmuliadiofficial?igsh=dTI4MjBvaTJyZ3Jk" class="social-btn" target="_blank" rel="noopener" aria-label="Instagram Musmuliadi">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@musmuliadiofficial?_r=1&_t=ZS-96jp0h98VoA" class="social-btn" target="_blank" rel="noopener" aria-label="TikTok Musmuliadi">
+          <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.77 1.52V6.79a4.85 4.85 0 01-1-.1z"/></svg>
+        </a>
+      </div>
+      <ul class="footer-links">
+        <li><a href="https://www.instagram.com/musmuliadiofficial?igsh=dTI4MjBvaTJyZ3Jk" target="_blank">@musmuliadiofficial (Instagram)</a></li>
+        <li><a href="https://www.tiktok.com/@musmuliadiofficial?_r=1&_t=ZS-96jp0h98VoA" target="_blank">@musmuliadiofficial (TikTok)</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>
+      <p class="footer-copy">&copy; 2025 Musmuliadi. Semua hak dilindungi undang-undang.</p>
+      <p class="footer-tech">Dibangun dengan HTML &amp; CSS murni · Form via <a href="https://formspree.io" target="_blank">Formspree</a></p>
+    </div>
+    <div class="social-row">
+      <a href="https://www.instagram.com/musmuliadiofficial?igsh=dTI4MjBvaTJyZ3Jk" class="social-btn" target="_blank" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      </a>
+      <a href="https://www.tiktok.com/@musmuliadiofficial?_r=1&_t=ZS-96jp0h98VoA" class="social-btn" target="_blank" aria-label="TikTok">
+        <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.77 1.52V6.79a4.85 4.85 0 01-1-.1z"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* NAV */
+function toggleNav(){
+  const t=document.getElementById('navToggle'),l=document.getElementById('navLinks');
+  t.classList.toggle('active');l.classList.toggle('open');
+}
+function closeNav(){
+  document.getElementById('navToggle').classList.remove('active');
+  document.getElementById('navLinks').classList.remove('open');
+}
+window.addEventListener('scroll',()=>{
+  document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>60);
+},{passive:true});
+
+/* REVEAL */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target);}});
+},{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+
+/* FILTER BUTTONS */
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
+/* FORM */
+const form=document.getElementById('contactForm');
+const successDiv=document.getElementById('formSuccess');
+const submitBtn=document.getElementById('submitBtn');
+form.addEventListener('submit',async e=>{
+  e.preventDefault();
+  submitBtn.textContent='Mengirim...';submitBtn.disabled=true;
+  try{
+    const res=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{Accept:'application/json'}});
+    if(res.ok){form.style.display='none';successDiv.style.display='block';}
+    else{
+      const j=await res.json();
+      alert(j.errors?j.errors.map(e=>e.message).join(', '):'Terjadi kesalahan. Silakan coba lagi.');
+      submitBtn.textContent='Kirim Pesan';submitBtn.disabled=false;
+    }
+  }catch{
+    alert('Gagal mengirim. Periksa koneksi internet Anda.');
+    submitBtn.textContent='Kirim Pesan';submitBtn.disabled=false;
+  }
+});
+
+/* ACTIVE NAV */
+const secs=document.querySelectorAll('section[id]');
+const nls=document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-90)cur=s.id});
+  nls.forEach(a=>{a.style.color=a.getAttribute('href')==='#'+cur?'#f5f2ec':'';});
+},{passive:true});
+</script>
+
+<script>
+if (window.netlifyIdentity) {
+  window.netlifyIdentity.on("init", user => {
+    if (!user) {
+      window.netlifyIdentity.on("login", () => {
+        document.location.href = "/admin/";
+      });
+    }
+  });
+}
+</script>
+</body>
+</html>
