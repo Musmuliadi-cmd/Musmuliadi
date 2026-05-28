@@ -1,1 +1,1049 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel — Musmuliadi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0a0f1a;--ink2:#141c2e;--ink3:#1c2840;
+  --red:#c0392b;--red-lt:#e05a4b;--red-dim:rgba(192,57,43,.1);
+  --paper:#f5f2ec;--paper2:#ede9e0;--paper3:#e4dfd3;
+  --t1:#0a0f1a;--t2:#3a4560;--t3:#6e7d99;--t4:#a0aec0;
+  --green:#27ae60;--green-dim:rgba(39,174,96,.1);
+  --yellow:#f39c12;--yellow-dim:rgba(243,156,18,.1);
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Plus Jakarta Sans',system-ui,sans-serif;
+  --ease:cubic-bezier(.4,0,.2,1);
+}
+html{font-size:16px;height:100%}
+body{font-family:var(--sans);background:var(--paper);color:var(--t1);line-height:1.6;min-height:100%}
 
+/* ── LOGIN SCREEN ── */
+#loginScreen{
+  display:flex;align-items:center;justify-content:center;
+  min-height:100vh;background:var(--ink);
+  position:fixed;inset:0;z-index:1000;
+  transition:opacity .4s var(--ease),transform .4s var(--ease);
+}
+#loginScreen.hide{opacity:0;transform:scale(1.02);pointer-events:none}
+
+#loginScreen::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:28px 28px;pointer-events:none;
+}
+
+.login-box{
+  background:var(--ink2);border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;padding:2.5rem 2.25rem;width:360px;max-width:90vw;
+  position:relative;z-index:1;
+}
+.login-logo{
+  display:flex;align-items:center;gap:10px;margin-bottom:2rem;
+}
+.login-monogram{
+  width:40px;height:40px;background:var(--red);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:1.3rem;font-weight:600;color:#fff;
+}
+.login-brand{font-family:var(--serif);font-size:1.1rem;font-weight:500;color:#f5f2ec}
+.login-title{font-size:1.5rem;font-weight:600;color:#f5f2ec;margin-bottom:.35rem}
+.login-sub{font-size:.85rem;font-weight:300;color:rgba(245,242,236,.45);margin-bottom:1.75rem}
+
+.login-label{display:block;font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,242,236,.4);margin-bottom:.4rem}
+.login-input{
+  width:100%;padding:11px 14px;background:var(--ink3);
+  border:1.5px solid rgba(255,255,255,.08);border-radius:8px;
+  font-family:var(--sans);font-size:.95rem;color:#f5f2ec;outline:none;
+  transition:border-color .2s;margin-bottom:1rem;
+}
+.login-input:focus{border-color:rgba(192,57,43,.5)}
+.login-input::placeholder{color:rgba(245,242,236,.2)}
+.login-btn{
+  width:100%;padding:12px;background:var(--red);color:#fff;border:none;
+  border-radius:8px;font-family:var(--sans);font-size:.9rem;font-weight:600;
+  cursor:pointer;letter-spacing:.04em;margin-top:.25rem;
+  transition:background .2s,transform .15s;
+}
+.login-btn:hover{background:var(--red-lt);transform:translateY(-1px)}
+.login-err{
+  display:none;margin-top:.75rem;padding:10px 14px;
+  background:var(--red-dim);border:1px solid rgba(192,57,43,.3);
+  border-radius:6px;font-size:.82rem;color:var(--red-lt);text-align:center;
+}
+.login-hint{margin-top:1.25rem;font-size:.72rem;color:rgba(245,242,236,.2);text-align:center;line-height:1.5}
+
+/* ── APP SHELL ── */
+#app{display:none;min-height:100vh;flex-direction:column}
+#app.show{display:flex}
+
+/* Top Bar */
+.topbar{
+  position:sticky;top:0;z-index:100;height:60px;
+  background:var(--ink);border-bottom:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 1.5rem;
+}
+.topbar-left{display:flex;align-items:center;gap:10px}
+.topbar-monogram{
+  width:34px;height:34px;background:var(--red);border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:1.1rem;font-weight:600;color:#fff;
+}
+.topbar-title{font-family:var(--serif);font-size:1rem;font-weight:500;color:#f5f2ec}
+.topbar-right{display:flex;align-items:center;gap:.75rem}
+.topbar-site{
+  font-size:.75rem;color:rgba(245,242,236,.4);font-weight:300;
+  padding:6px 12px;border:1px solid rgba(255,255,255,.08);border-radius:6px;
+  text-decoration:none;transition:color .2s,border-color .2s;
+}
+.topbar-site:hover{color:#f5f2ec;border-color:rgba(255,255,255,.2)}
+.topbar-logout{
+  font-size:.75rem;color:rgba(245,242,236,.35);background:none;border:none;
+  cursor:pointer;padding:6px 10px;font-family:var(--sans);
+  transition:color .2s;
+}
+.topbar-logout:hover{color:var(--red-lt)}
+
+/* Layout */
+.app-body{display:flex;flex:1}
+
+/* Sidebar */
+.sidebar{
+  width:220px;flex-shrink:0;
+  background:#fff;border-right:1px solid var(--paper3);
+  padding:1.25rem 0;
+  display:flex;flex-direction:column;gap:.25rem;
+}
+.sidebar-section{
+  font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--t4);font-weight:600;padding:.75rem 1.25rem .35rem;
+}
+.nav-item{
+  display:flex;align-items:center;gap:.75rem;
+  padding:.6rem 1.25rem;font-size:.875rem;font-weight:500;
+  color:var(--t2);cursor:pointer;transition:all .15s;
+  border-left:3px solid transparent;
+}
+.nav-item:hover{background:var(--paper);color:var(--ink)}
+.nav-item.active{background:var(--red-dim);color:var(--red);border-left-color:var(--red)}
+.nav-icon{font-size:1rem;width:20px;text-align:center}
+
+/* Main Content */
+.main{flex:1;padding:2rem;overflow-y:auto;background:var(--paper)}
+
+/* ── VIEWS ── */
+.view{display:none}
+.view.active{display:block}
+
+/* Dashboard */
+.dash-greeting{margin-bottom:2rem}
+.dash-greeting h2{font-family:var(--serif);font-size:2rem;font-weight:500;color:var(--ink);margin-bottom:.25rem}
+.dash-greeting p{font-size:.9rem;color:var(--t3);font-weight:300}
+
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+.stat-card{
+  background:#fff;border:1px solid var(--paper3);border-radius:10px;
+  padding:1.25rem 1.4rem;
+}
+.stat-num{font-family:var(--serif);font-size:2.2rem;font-weight:500;color:var(--ink);line-height:1}
+.stat-lbl{font-size:.78rem;color:var(--t3);margin-top:.25rem;font-weight:300}
+.stat-card.red .stat-num{color:var(--red)}
+.stat-card.green .stat-num{color:var(--green)}
+
+.recent-section h3{font-family:var(--serif);font-size:1.3rem;font-weight:500;color:var(--ink);margin-bottom:1rem}
+.recent-list{display:flex;flex-direction:column;gap:.5rem}
+.recent-item{
+  background:#fff;border:1px solid var(--paper3);border-radius:8px;
+  padding:.9rem 1.1rem;display:flex;align-items:center;justify-content:space-between;
+  gap:1rem;cursor:pointer;transition:border-color .2s;
+}
+.recent-item:hover{border-color:var(--red)}
+.recent-item-left{flex:1;min-width:0}
+.recent-item-title{font-size:.9rem;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.recent-item-meta{font-size:.75rem;color:var(--t3);margin-top:.15rem;font-weight:300}
+.badge{
+  padding:3px 10px;border-radius:100px;font-size:.65rem;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;flex-shrink:0;
+}
+.badge-green{background:var(--green-dim);color:var(--green)}
+.badge-yellow{background:var(--yellow-dim);color:var(--yellow)}
+.badge-red{background:var(--red-dim);color:var(--red)}
+
+/* ── ARTIKEL LIST ── */
+.view-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:.75rem}
+.view-title{font-family:var(--serif);font-size:1.8rem;font-weight:500;color:var(--ink)}
+
+.btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:10px 20px;border-radius:7px;
+  font-family:var(--sans);font-size:.82rem;font-weight:600;
+  letter-spacing:.04em;cursor:pointer;border:none;transition:all .2s var(--ease);
+  text-decoration:none;
+}
+.btn-red{background:var(--red);color:#fff;box-shadow:0 2px 12px rgba(192,57,43,.25)}
+.btn-red:hover{background:var(--red-lt);transform:translateY(-1px)}
+.btn-outline{background:#fff;color:var(--t2);border:1.5px solid var(--paper3)}
+.btn-outline:hover{border-color:var(--ink);color:var(--ink)}
+.btn-sm{padding:7px 14px;font-size:.78rem}
+.btn-danger{background:#fff;color:var(--red);border:1.5px solid rgba(192,57,43,.25)}
+.btn-danger:hover{background:var(--red-dim);border-color:var(--red)}
+
+.filter-bar{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.25rem}
+.filter-chip{
+  padding:5px 14px;border-radius:100px;border:1px solid var(--paper3);
+  font-size:.75rem;font-weight:500;color:var(--t3);
+  background:#fff;cursor:pointer;transition:all .15s;font-family:var(--sans);
+}
+.filter-chip.active,.filter-chip:hover{border-color:var(--red);color:var(--red);background:var(--red-dim)}
+
+.articles-table{width:100%;border-collapse:collapse}
+.articles-table th{
+  text-align:left;font-size:.68rem;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--t4);padding:.75rem 1rem;
+  border-bottom:2px solid var(--paper3);background:#fff;
+}
+.articles-table td{
+  padding:.85rem 1rem;border-bottom:1px solid var(--paper2);
+  vertical-align:middle;background:#fff;
+}
+.articles-table tr:hover td{background:var(--paper)}
+.art-title-cell{font-weight:500;font-size:.9rem;color:var(--ink);max-width:320px}
+.art-title-cell span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.art-actions{display:flex;gap:.4rem}
+
+.empty-state{
+  text-align:center;padding:4rem 2rem;background:#fff;
+  border-radius:10px;border:1px solid var(--paper3);
+}
+.empty-icon{font-size:3rem;margin-bottom:1rem}
+.empty-state h3{font-family:var(--serif);font-size:1.4rem;font-weight:500;color:var(--ink);margin-bottom:.4rem}
+.empty-state p{font-size:.88rem;color:var(--t3);font-weight:300;margin-bottom:1.5rem}
+
+/* ── EDITOR ── */
+.editor-layout{display:grid;grid-template-columns:1fr 280px;gap:1.5rem;align-items:start}
+.editor-main{}
+.editor-sidebar{}
+
+.form-group{margin-bottom:1.1rem}
+.form-label{
+  display:block;font-size:.72rem;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--t3);margin-bottom:.4rem;
+}
+.form-input,.form-select,.form-textarea{
+  width:100%;padding:10px 13px;background:#fff;
+  border:1.5px solid var(--paper3);border-radius:8px;
+  font-family:var(--sans);font-size:.9rem;color:var(--ink);outline:none;
+  transition:border-color .2s;
+}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--red)}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--t4)}
+.form-textarea{resize:vertical;line-height:1.65}
+
+/* Markdown editor */
+.md-editor-wrap{border:1.5px solid var(--paper3);border-radius:8px;overflow:hidden;background:#fff}
+.md-toolbar{
+  display:flex;gap:2px;padding:.5rem .75rem;
+  background:var(--paper2);border-bottom:1px solid var(--paper3);flex-wrap:wrap;
+}
+.md-tool{
+  padding:5px 9px;border-radius:5px;background:none;border:none;
+  font-size:.82rem;font-weight:600;color:var(--t2);cursor:pointer;
+  font-family:var(--sans);transition:background .15s,color .15s;
+}
+.md-tool:hover{background:var(--paper3);color:var(--ink)}
+.md-tool.sep{width:1px;background:var(--paper3);padding:0;margin:4px 4px;cursor:default}
+.md-tool:hover.sep{background:var(--paper3)}
+.md-textarea{
+  width:100%;min-height:360px;padding:1rem;
+  border:none;outline:none;resize:vertical;
+  font-family:'Courier New',monospace;font-size:.88rem;
+  line-height:1.75;color:var(--ink);background:#fff;
+}
+.md-preview{
+  min-height:360px;padding:1rem;
+  font-size:.9rem;line-height:1.8;color:var(--t2);
+  font-weight:300;display:none;
+}
+.md-preview.show{display:block}
+.md-textarea.hide{display:none}
+
+/* Markdown preview styles */
+.md-preview h1,.md-preview h2,.md-preview h3{
+  font-family:var(--serif);font-weight:500;color:var(--ink);margin:1.25rem 0 .5rem;
+}
+.md-preview h1{font-size:1.8rem}.md-preview h2{font-size:1.4rem}.md-preview h3{font-size:1.15rem}
+.md-preview p{margin-bottom:.85rem}
+.md-preview strong{font-weight:600;color:var(--ink)}
+.md-preview em{font-style:italic}
+.md-preview ul,.md-preview ol{padding-left:1.5rem;margin-bottom:.85rem}
+.md-preview li{margin-bottom:.25rem}
+.md-preview blockquote{
+  border-left:3px solid var(--red);padding:.5rem 1rem;
+  background:var(--paper);margin:.85rem 0;color:var(--t2);font-style:italic;
+}
+.md-preview code{
+  background:var(--paper2);padding:2px 6px;border-radius:3px;
+  font-family:monospace;font-size:.85em;
+}
+.md-preview a{color:var(--red);text-decoration:underline}
+.md-preview hr{border:none;border-top:1px solid var(--paper3);margin:1rem 0}
+
+/* Sidebar card */
+.sidebar-card{
+  background:#fff;border:1px solid var(--paper3);border-radius:10px;
+  padding:1.25rem;margin-bottom:1rem;
+}
+.sidebar-card-title{
+  font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--t3);margin-bottom:1rem;
+}
+
+/* Tab toggle (Tulis / Preview) */
+.tab-row{display:flex;gap:.35rem;margin-bottom:.5rem}
+.tab-btn{
+  padding:6px 16px;border-radius:6px;border:1px solid var(--paper3);
+  font-size:.78rem;font-weight:500;color:var(--t3);
+  background:#fff;cursor:pointer;font-family:var(--sans);transition:all .15s;
+}
+.tab-btn.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* Toast */
+#toast{
+  position:fixed;bottom:2rem;right:2rem;z-index:9999;
+  background:var(--ink);color:#f5f2ec;
+  padding:12px 20px;border-radius:8px;font-size:.85rem;font-weight:500;
+  opacity:0;transform:translateY(8px);
+  transition:opacity .3s var(--ease),transform .3s var(--ease);
+  pointer-events:none;display:flex;align-items:center;gap:8px;
+}
+#toast.show{opacity:1;transform:none}
+#toast.success{border-left:3px solid var(--green)}
+#toast.error{border-left:3px solid var(--red)}
+
+/* Modal konfirmasi hapus */
+.modal-overlay{
+  display:none;position:fixed;inset:0;z-index:500;
+  background:rgba(10,15,26,.6);backdrop-filter:blur(4px);
+  align-items:center;justify-content:center;
+}
+.modal-overlay.show{display:flex}
+.modal-box{
+  background:#fff;border-radius:12px;padding:2rem;width:360px;max-width:90vw;
+  box-shadow:0 24px 64px rgba(0,0,0,.2);
+}
+.modal-icon{font-size:2rem;margin-bottom:.75rem}
+.modal-title{font-family:var(--serif);font-size:1.3rem;font-weight:500;color:var(--ink);margin-bottom:.4rem}
+.modal-desc{font-size:.88rem;color:var(--t3);font-weight:300;margin-bottom:1.5rem;line-height:1.6}
+.modal-actions{display:flex;gap:.5rem;justify-content:flex-end}
+
+/* Kata sandi settings */
+.pwd-form{max-width:400px}
+
+/* Responsive */
+@media(max-width:900px){
+  .sidebar{display:none}
+  .stats-row{grid-template-columns:1fr 1fr}
+  .editor-layout{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .stats-row{grid-template-columns:1fr 1fr}
+  .main{padding:1rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ LOGIN ═══ -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="login-monogram">M</div>
+      <span class="login-brand">Musmuliadi</span>
+    </div>
+    <h2 class="login-title">Panel Admin</h2>
+    <p class="login-sub">Masuk untuk kelola konten website Anda</p>
+    <label class="login-label" for="loginPass">Kata Sandi</label>
+    <input type="password" id="loginPass" class="login-input" placeholder="••••••••" autocomplete="current-password">
+    <button class="login-btn" onclick="doLogin()">Masuk →</button>
+    <div class="login-err" id="loginErr">Kata sandi salah. Coba lagi.</div>
+    <p class="login-hint">Kata sandi default: <strong style="color:rgba(245,242,236,.5)">musmuliadi2025</strong><br>Ganti segera di menu Pengaturan</p>
+  </div>
+</div>
+
+<!-- ═══ APP ═══ -->
+<div id="app">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-monogram">M</div>
+      <span class="topbar-title">Admin Panel</span>
+    </div>
+    <div class="topbar-right">
+      <a href="../index.html" target="_blank" class="topbar-site">🌐 Lihat Website</a>
+      <button class="topbar-logout" onclick="doLogout()">Keluar</button>
+    </div>
+  </div>
+
+  <div class="app-body">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-section">Menu</div>
+      <div class="nav-item active" onclick="showView('dashboard')">
+        <span class="nav-icon">📊</span> Dashboard
+      </div>
+      <div class="nav-item" onclick="showView('articles')">
+        <span class="nav-icon">✍️</span> Tulisan & Opini
+      </div>
+      <div class="sidebar-section">Sistem</div>
+      <div class="nav-item" onclick="showView('settings')">
+        <span class="nav-icon">⚙️</span> Pengaturan
+      </div>
+    </div>
+
+    <!-- Main -->
+    <div class="main">
+
+      <!-- ─ DASHBOARD ─ -->
+      <div class="view active" id="view-dashboard">
+        <div class="dash-greeting">
+          <h2 id="greetingText">Selamat datang, Musmuliadi</h2>
+          <p id="greetingDate"></p>
+        </div>
+        <div class="stats-row">
+          <div class="stat-card red">
+            <div class="stat-num" id="statTotal">0</div>
+            <div class="stat-lbl">Total Tulisan</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-num" id="statTerbit">0</div>
+            <div class="stat-lbl">Terbit</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" id="statDraf">0</div>
+            <div class="stat-lbl">Draf</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" id="statKat">0</div>
+            <div class="stat-lbl">Kategori</div>
+          </div>
+        </div>
+        <div class="recent-section">
+          <h3>Tulisan Terbaru</h3>
+          <div class="recent-list" id="recentList">
+            <div class="empty-state" style="padding:2rem">
+              <div class="empty-icon">✍️</div>
+              <p style="margin:0">Belum ada tulisan. <span style="color:var(--red);cursor:pointer" onclick="showView('articles')">Buat sekarang →</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─ ARTIKEL LIST ─ -->
+      <div class="view" id="view-articles">
+        <div class="view-header">
+          <span class="view-title">Tulisan & Opini</span>
+          <button class="btn btn-red" onclick="openEditor()">＋ Tulisan Baru</button>
+        </div>
+        <div class="filter-bar" id="filterBar">
+          <button class="filter-chip active" onclick="filterArticles('semua',this)">Semua</button>
+          <button class="filter-chip" onclick="filterArticles('Opini',this)">Opini</button>
+          <button class="filter-chip" onclick="filterArticles('Kepemudaan',this)">Kepemudaan</button>
+          <button class="filter-chip" onclick="filterArticles('Politik',this)">Politik</button>
+          <button class="filter-chip" onclick="filterArticles('Bisnis',this)">Bisnis</button>
+          <button class="filter-chip" onclick="filterArticles('Kemanusiaan',this)">Kemanusiaan</button>
+          <button class="filter-chip" onclick="filterArticles('AMD',this)">Anak Muda Desa</button>
+          <button class="filter-chip" onclick="filterArticles('Riset',this)">Riset</button>
+        </div>
+        <div id="articlesContainer"></div>
+      </div>
+
+      <!-- ─ EDITOR ─ -->
+      <div class="view" id="view-editor">
+        <div class="view-header">
+          <span class="view-title" id="editorTitle">Tulisan Baru</span>
+          <div style="display:flex;gap:.5rem">
+            <button class="btn btn-outline" onclick="showView('articles')">← Batal</button>
+            <button class="btn btn-red" onclick="saveArticle()">💾 Simpan</button>
+          </div>
+        </div>
+        <div class="editor-layout">
+          <div class="editor-main">
+            <div class="form-group">
+              <label class="form-label">Judul Artikel *</label>
+              <input type="text" id="artJudul" class="form-input" placeholder="Tulis judul yang menarik...">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Kutipan Singkat *</label>
+              <textarea id="artKutipan" class="form-textarea" rows="2" placeholder="1–2 kalimat ringkasan yang tampil di kartu artikel..."></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Isi Artikel *</label>
+              <div class="tab-row">
+                <button class="tab-btn active" onclick="switchTab('tulis')">✏️ Tulis</button>
+                <button class="tab-btn" onclick="switchTab('preview')">👁 Preview</button>
+              </div>
+              <div class="md-editor-wrap">
+                <div class="md-toolbar">
+                  <button class="md-tool" onclick="mdInsert('**','**')" title="Bold"><b>B</b></button>
+                  <button class="md-tool" onclick="mdInsert('*','*')" title="Italic"><i>I</i></button>
+                  <button class="md-tool" onclick="mdInsert('~~','~~')" title="Coret">S̶</button>
+                  <div class="md-tool sep"></div>
+                  <button class="md-tool" onclick="mdInsertLine('## ')" title="Judul">H2</button>
+                  <button class="md-tool" onclick="mdInsertLine('### ')" title="Sub-judul">H3</button>
+                  <div class="md-tool sep"></div>
+                  <button class="md-tool" onclick="mdInsertLine('- ')" title="List">• List</button>
+                  <button class="md-tool" onclick="mdInsertLine('1. ')" title="Nomor">1. List</button>
+                  <button class="md-tool" onclick="mdInsertLine('> ')" title="Kutipan">" Kutip</button>
+                  <div class="md-tool sep"></div>
+                  <button class="md-tool" onclick="mdInsertLine('---')" title="Garis">─ Garis</button>
+                  <button class="md-tool" onclick="mdInsertLink()" title="Link">🔗</button>
+                </div>
+                <textarea id="artIsi" class="md-textarea" placeholder="Tulis isi artikel di sini...&#10;&#10;Gunakan ## untuk judul bagian&#10;Gunakan **teks** untuk cetak tebal&#10;Gunakan *teks* untuk miring&#10;Gunakan > untuk kutipan"></textarea>
+                <div id="mdPreview" class="md-preview"></div>
+              </div>
+            </div>
+          </div>
+          <div class="editor-sidebar">
+            <div class="sidebar-card">
+              <div class="sidebar-card-title">Status & Publikasi</div>
+              <div class="form-group">
+                <label class="form-label">Status</label>
+                <select id="artStatus" class="form-select">
+                  <option value="draf">🟡 Draf (Tersimpan)</option>
+                  <option value="terbit">🟢 Terbit (Publik)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Tanggal</label>
+                <input type="date" id="artTanggal" class="form-input">
+              </div>
+              <button class="btn btn-red" style="width:100%" onclick="saveArticle()">💾 Simpan Tulisan</button>
+            </div>
+            <div class="sidebar-card">
+              <div class="sidebar-card-title">Kategori & Info</div>
+              <div class="form-group">
+                <label class="form-label">Kategori</label>
+                <select id="artKategori" class="form-select">
+                  <option value="Opini">Opini</option>
+                  <option value="Kepemudaan">Kepemudaan</option>
+                  <option value="Politik">Politik</option>
+                  <option value="Bisnis">Bisnis</option>
+                  <option value="Kemanusiaan">Kemanusiaan</option>
+                  <option value="AMD">Anak Muda Desa</option>
+                  <option value="Riset">Riset & Data</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Estimasi Baca</label>
+                <input type="number" id="artMenit" class="form-input" value="5" min="1" max="60"> <span style="font-size:.78rem;color:var(--t3)">menit</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─ PENGATURAN ─ -->
+      <div class="view" id="view-settings">
+        <div class="view-header"><span class="view-title">Pengaturan</span></div>
+        <div class="pwd-form">
+          <div class="sidebar-card">
+            <div class="sidebar-card-title">🔒 Ganti Kata Sandi Admin</div>
+            <p style="font-size:.85rem;color:var(--t3);margin-bottom:1.25rem;font-weight:300">Sangat disarankan untuk mengganti kata sandi default segera.</p>
+            <div class="form-group">
+              <label class="form-label">Kata Sandi Saat Ini</label>
+              <input type="password" id="pwdLama" class="form-input" placeholder="••••••••">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Kata Sandi Baru</label>
+              <input type="password" id="pwdBaru" class="form-input" placeholder="Minimal 8 karakter">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Konfirmasi Kata Sandi Baru</label>
+              <input type="password" id="pwdKonfirm" class="form-input" placeholder="Ulangi kata sandi baru">
+            </div>
+            <button class="btn btn-red" onclick="gantiPassword()">Simpan Kata Sandi Baru</button>
+          </div>
+          <div class="sidebar-card" style="margin-top:1rem">
+            <div class="sidebar-card-title">🔑 GitHub Token (Wajib untuk Publish)</div>
+            <p style="font-size:.82rem;color:var(--t3);line-height:1.7;margin-bottom:1rem;font-weight:300">
+              Token ini menghubungkan panel admin ke GitHub agar artikel langsung muncul di website.<br>
+              Cara dapat token: <strong style="color:var(--ink)">github.com → Settings → Developer settings → Personal access tokens → Tokens (classic) → Generate new token</strong> → centang <strong>repo</strong> → Generate → Copy.
+            </p>
+            <div class="form-group">
+              <label class="form-label">Personal Access Token</label>
+              <input type="password" id="ghToken" class="form-input" placeholder="ghp_xxxxxxxxxxxx">
+            </div>
+            <button class="btn btn-red" onclick="simpanToken()">Simpan Token</button>
+          </div>
+          <div class="sidebar-card" style="margin-top:1rem">
+            <div class="sidebar-card-title">ℹ️ Informasi Sistem</div>
+            <p style="font-size:.82rem;color:var(--t3);line-height:1.7;font-weight:300">
+              Konten artikel tersimpan di <strong style="color:var(--ink)">browser lokal</strong> (localStorage) perangkat ini.<br><br>
+              <strong style="color:var(--red)">Penting:</strong> Untuk artikel agar tampil di website publik, perlu integrasi tambahan (GitHub + Netlify). Gunakan panel ini dulu untuk menulis dan menyimpan draf.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /main -->
+  </div><!-- /app-body -->
+</div><!-- /app -->
+
+<!-- Modal hapus -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal-box">
+    <div class="modal-icon">🗑️</div>
+    <h3 class="modal-title">Hapus Tulisan?</h3>
+    <p class="modal-desc">Tindakan ini tidak bisa dibatalkan. Tulisan akan dihapus permanen.</p>
+    <div class="modal-actions">
+      <button class="btn btn-outline btn-sm" onclick="closeModal()">Batal</button>
+      <button class="btn btn-danger btn-sm" id="confirmDeleteBtn">Ya, Hapus</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script>
+// ═══════════════════════════════════
+//  STORAGE KEYS
+// ═══════════════════════════════════
+const KEY_ARTICLES = 'msl_articles';
+const KEY_PWD      = 'msl_pwd';
+const KEY_SESSION  = 'msl_session';
+
+// ═══════════════════════════════════════
+//  GITHUB PUBLISHER
+// ═══════════════════════════════════════
+const GH_REPO   = 'Musmuliadi-cmd/Musmuliadi';
+const GH_BRANCH = 'main';
+
+async function publishToGitHub(article) {
+  const token = localStorage.getItem('msl_gh_token');
+  if (!token) {
+    showToast('⚠️ Token GitHub belum diset. Buka Pengaturan.','error');
+    return false;
+  }
+
+  const filename = article.id + '.json';
+  const path     = 'artikel/' + filename;
+  const content  = btoa(unescape(encodeURIComponent(JSON.stringify(article, null, 2))));
+  const apiUrl   = 'https://api.github.com/repos/' + GH_REPO + '/contents/' + path;
+
+  // Cek apakah file sudah ada (untuk update)
+  let sha = null;
+  try {
+    const check = await fetch(apiUrl + '?ref=' + GH_BRANCH, {
+      headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github.v3+json' }
+    });
+    if (check.ok) {
+      const data = await check.json();
+      sha = data.sha;
+    }
+  } catch(e) {}
+
+  const body = {
+    message: (sha ? 'Update' : 'Tambah') + ' artikel: ' + article.judul,
+    content: content,
+    branch: GH_BRANCH,
+  };
+  if (sha) body.sha = sha;
+
+  const res = await fetch(apiUrl, {
+    method: 'PUT',
+    headers: {
+      Authorization: 'token ' + token,
+      Accept: 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  });
+
+  return res.ok;
+}
+
+async function deleteFromGitHub(articleId) {
+  const token = localStorage.getItem('msl_gh_token');
+  if (!token) return false;
+  const path   = 'artikel/' + articleId + '.json';
+  const apiUrl = 'https://api.github.com/repos/' + GH_REPO + '/contents/' + path;
+  try {
+    const check = await fetch(apiUrl + '?ref=' + GH_BRANCH, {
+      headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github.v3+json' }
+    });
+    if (!check.ok) return true;
+    const data = await check.json();
+    const res  = await fetch(apiUrl, {
+      method: 'DELETE',
+      headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: 'Hapus artikel: ' + articleId, sha: data.sha, branch: GH_BRANCH }),
+    });
+    return res.ok;
+  } catch(e) { return false; }
+}
+
+const DEFAULT_PWD  = 'musmuliadi2025';
+
+// ═══════════════════════════════════
+//  LOGIN / LOGOUT
+// ═══════════════════════════════════
+function getPwd(){ return localStorage.getItem(KEY_PWD) || DEFAULT_PWD; }
+
+function doLogin(){
+  const val = document.getElementById('loginPass').value;
+  if(val === getPwd()){
+    sessionStorage.setItem(KEY_SESSION,'1');
+    document.getElementById('loginScreen').classList.add('hide');
+    setTimeout(()=>{ document.getElementById('loginScreen').style.display='none'; },400);
+    document.getElementById('app').classList.add('show');
+    initApp();
+  } else {
+    document.getElementById('loginErr').style.display='block';
+    document.getElementById('loginPass').value='';
+    document.getElementById('loginPass').focus();
+  }
+}
+
+document.getElementById('loginPass').addEventListener('keydown', e=>{ if(e.key==='Enter') doLogin(); });
+
+function doLogout(){
+  sessionStorage.removeItem(KEY_SESSION);
+  location.reload();
+}
+
+// Auto-login jika sudah ada sesi
+if(sessionStorage.getItem(KEY_SESSION)==='1'){
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('app').classList.add('show');
+  initApp();
+}
+
+// ═══════════════════════════════════
+//  APP INIT
+// ═══════════════════════════════════
+function initApp(){
+  // Tampilkan token yang sudah ada (masked)
+  const t = localStorage.getItem('msl_gh_token');
+  if (t && document.getElementById('ghToken')) {
+    document.getElementById('ghToken').placeholder = 'Token tersimpan: ghp_****' + t.slice(-4);
+  }
+  setGreeting();
+  renderDashboard();
+  renderArticles();
+}
+
+function setGreeting(){
+  const hr = new Date().getHours();
+  const sal = hr<11?'Selamat pagi':hr<15?'Selamat siang':hr<18?'Selamat sore':'Selamat malam';
+  document.getElementById('greetingText').textContent = sal+', Musmuliadi 👋';
+  const opts = {weekday:'long',year:'numeric',month:'long',day:'numeric'};
+  document.getElementById('greetingDate').textContent = new Date().toLocaleDateString('id-ID',opts);
+}
+
+// ═══════════════════════════════════
+//  ARTIKEL DATA
+// ═══════════════════════════════════
+function getArticles(){ try{ return JSON.parse(localStorage.getItem(KEY_ARTICLES)||'[]'); }catch{ return []; } }
+function saveArticles(arr){ localStorage.setItem(KEY_ARTICLES, JSON.stringify(arr)); }
+
+let currentEditId = null;
+let currentFilter = 'semua';
+let deleteTargetId = null;
+
+// ═══════════════════════════════════
+//  DASHBOARD
+// ═══════════════════════════════════
+function renderDashboard(){
+  const arts = getArticles();
+  document.getElementById('statTotal').textContent = arts.length;
+  document.getElementById('statTerbit').textContent = arts.filter(a=>a.status==='terbit').length;
+  document.getElementById('statDraf').textContent = arts.filter(a=>a.status==='draf').length;
+  const kats = [...new Set(arts.map(a=>a.kategori))];
+  document.getElementById('statKat').textContent = kats.length;
+
+  const el = document.getElementById('recentList');
+  if(!arts.length){
+    el.innerHTML=`<div class="empty-state" style="padding:1.5rem"><div class="empty-icon">✍️</div><p style="margin:0">Belum ada tulisan. <span style="color:var(--red);cursor:pointer" onclick="showView('articles')">Buat sekarang →</span></p></div>`;
+    return;
+  }
+  const recent = [...arts].sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt)).slice(0,5);
+  el.innerHTML = recent.map(a=>`
+    <div class="recent-item" onclick="openEditor('${a.id}')">
+      <div class="recent-item-left">
+        <div class="recent-item-title">${escHtml(a.judul||'Tanpa Judul')}</div>
+        <div class="recent-item-meta">${a.kategori} · ${formatDate(a.tanggal)}</div>
+      </div>
+      <span class="badge ${a.status==='terbit'?'badge-green':'badge-yellow'}">${a.status==='terbit'?'Terbit':'Draf'}</span>
+    </div>`).join('');
+}
+
+// ═══════════════════════════════════
+//  ARTIKEL LIST
+// ═══════════════════════════════════
+function renderArticles(){
+  const arts = getArticles();
+  const filtered = currentFilter==='semua' ? arts : arts.filter(a=>a.kategori===currentFilter);
+  const el = document.getElementById('articlesContainer');
+
+  if(!filtered.length){
+    el.innerHTML=`<div class="empty-state"><div class="empty-icon">📄</div><h3>${currentFilter==='semua'?'Belum ada tulisan':'Tidak ada tulisan di kategori ini'}</h3><p>${currentFilter==='semua'?'Mulai tulis artikel pertama Anda':'Coba pilih kategori lain atau buat tulisan baru'}</p>${currentFilter==='semua'?'<button class="btn btn-red" onclick="openEditor()">＋ Buat Tulisan Pertama</button>':''}</div>`;
+    return;
+  }
+
+  el.innerHTML=`<table class="articles-table">
+    <thead><tr>
+      <th>Judul</th><th>Kategori</th><th>Tanggal</th><th>Status</th><th>Aksi</th>
+    </tr></thead>
+    <tbody>${filtered.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt)).map(a=>`
+      <tr>
+        <td class="art-title-cell"><span title="${escHtml(a.judul||'')}">${escHtml(a.judul||'Tanpa Judul')}</span></td>
+        <td><span class="badge badge-red">${a.kategori}</span></td>
+        <td style="font-size:.82rem;color:var(--t3);white-space:nowrap">${formatDate(a.tanggal)}</td>
+        <td><span class="badge ${a.status==='terbit'?'badge-green':'badge-yellow'}">${a.status==='terbit'?'Terbit':'Draf'}</span></td>
+        <td><div class="art-actions">
+          <button class="btn btn-outline btn-sm" onclick="openEditor('${a.id}')">✏️ Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="confirmDelete('${a.id}')">🗑️</button>
+        </div></td>
+      </tr>`).join('')}
+    </tbody></table>`;
+}
+
+function filterArticles(kat, el){
+  currentFilter = kat;
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  renderArticles();
+}
+
+// ═══════════════════════════════════
+//  EDITOR
+// ═══════════════════════════════════
+function openEditor(id=null){
+  currentEditId = id;
+  document.getElementById('editorTitle').textContent = id ? 'Edit Tulisan' : 'Tulisan Baru';
+
+  if(id){
+    const art = getArticles().find(a=>a.id===id);
+    if(art){
+      document.getElementById('artJudul').value    = art.judul||'';
+      document.getElementById('artKutipan').value  = art.kutipan||'';
+      document.getElementById('artIsi').value      = art.isi||'';
+      document.getElementById('artStatus').value   = art.status||'draf';
+      document.getElementById('artKategori').value = art.kategori||'Opini';
+      document.getElementById('artTanggal').value  = art.tanggal||today();
+      document.getElementById('artMenit').value    = art.menit||5;
+    }
+  } else {
+    document.getElementById('artJudul').value    = '';
+    document.getElementById('artKutipan').value  = '';
+    document.getElementById('artIsi').value      = '';
+    document.getElementById('artStatus').value   = 'draf';
+    document.getElementById('artKategori').value = 'Opini';
+    document.getElementById('artTanggal').value  = today();
+    document.getElementById('artMenit').value    = 5;
+  }
+  switchTab('tulis');
+  showView('editor');
+}
+
+function saveArticle(){
+  const judul   = document.getElementById('artJudul').value.trim();
+  const kutipan = document.getElementById('artKutipan').value.trim();
+  const isi     = document.getElementById('artIsi').value.trim();
+  const status  = document.getElementById('artStatus').value;
+  const kategori= document.getElementById('artKategori').value;
+  const tanggal = document.getElementById('artTanggal').value;
+  const menit   = document.getElementById('artMenit').value;
+
+  if(!judul){ showToast('⚠️ Judul tidak boleh kosong','error'); return; }
+  if(!kutipan){ showToast('⚠️ Kutipan tidak boleh kosong','error'); return; }
+  if(!isi){ showToast('⚠️ Isi artikel tidak boleh kosong','error'); return; }
+
+  const arts = getArticles();
+  if(currentEditId){
+    const idx = arts.findIndex(a=>a.id===currentEditId);
+    if(idx>-1){ arts[idx]={...arts[idx],judul,kutipan,isi,status,kategori,tanggal,menit,updatedAt:new Date().toISOString()}; }
+  } else {
+    arts.push({id:uid(),judul,kutipan,isi,status,kategori,tanggal,menit,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()});
+  }
+  saveArticles(arts);
+  renderDashboard();
+  renderArticles();
+
+  // Publish ke GitHub jika status terbit
+  const savedArt = getArticles().find(a => a.id === (currentEditId || arts[arts.length-1].id));
+  if (savedArt) {
+    submitBtn && (submitBtn.disabled = true);
+    showToast('⏳ Menyimpan ke GitHub...', 'success');
+    publishToGitHub(savedArt).then(ok => {
+      if (ok) showToast('✅ Tersimpan & dipublikasi ke website!', 'success');
+      else    showToast('⚠️ Tersimpan lokal. Cek token GitHub di Pengaturan.', 'error');
+    });
+  }
+  showView('articles');
+}
+
+// ═══════════════════════════════════
+//  DELETE
+// ═══════════════════════════════════
+function confirmDelete(id){
+  deleteTargetId = id;
+  document.getElementById('deleteModal').classList.add('show');
+  document.getElementById('confirmDeleteBtn').onclick = ()=>{ doDelete(); };
+}
+function doDelete(){
+  const delId = deleteTargetId;
+  const arts = getArticles().filter(a=>a.id!==delId);
+  saveArticles(arts);
+  renderDashboard();
+  renderArticles();
+  closeModal();
+  showToast('🗑️ Tulisan dihapus','success');
+  deleteFromGitHub(delId);
+}
+function closeModal(){ document.getElementById('deleteModal').classList.remove('show'); }
+
+// ═══════════════════════════════════
+//  MARKDOWN TOOLBAR
+// ═══════════════════════════════════
+function mdInsert(before, after){
+  const ta = document.getElementById('artIsi');
+  const s=ta.selectionStart, e=ta.selectionEnd;
+  const sel = ta.value.substring(s,e);
+  ta.value = ta.value.substring(0,s)+before+sel+after+ta.value.substring(e);
+  ta.selectionStart=s+before.length; ta.selectionEnd=e+before.length;
+  ta.focus();
+}
+function mdInsertLine(prefix){
+  const ta=document.getElementById('artIsi');
+  const s=ta.selectionStart;
+  const lineStart=ta.value.lastIndexOf('\n',s-1)+1;
+  ta.value=ta.value.substring(0,lineStart)+prefix+ta.value.substring(lineStart);
+  ta.selectionStart=ta.selectionEnd=lineStart+prefix.length+(s-lineStart);
+  ta.focus();
+}
+function mdInsertLink(){
+  const url=prompt('Masukkan URL:','https://');
+  if(url){ mdInsert('[',']('+url+')'); }
+}
+
+// ═══════════════════════════════════
+//  TAB TULIS / PREVIEW
+// ═══════════════════════════════════
+function switchTab(mode){
+  const ta=document.getElementById('artIsi');
+  const pv=document.getElementById('mdPreview');
+  const tabs=document.querySelectorAll('.tab-btn');
+  tabs.forEach(t=>t.classList.remove('active'));
+  if(mode==='tulis'){
+    ta.classList.remove('hide'); pv.classList.remove('show');
+    tabs[0].classList.add('active');
+  } else {
+    pv.innerHTML = renderMarkdown(ta.value);
+    ta.classList.add('hide'); pv.classList.add('show');
+    tabs[1].classList.add('active');
+  }
+}
+
+// Simple markdown renderer
+function renderMarkdown(md){
+  if(!md) return '<p style="color:var(--t4)">Belum ada konten...</p>';
+  return md
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/^### (.+)$/gm,'<h3>$1</h3>')
+    .replace(/^## (.+)$/gm,'<h2>$1</h2>')
+    .replace(/^# (.+)$/gm,'<h1>$1</h1>')
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g,'<em>$1</em>')
+    .replace(/~~(.+?)~~/g,'<del>$1</del>')
+    .replace(/^> (.+)$/gm,'<blockquote>$1</blockquote>')
+    .replace(/^- (.+)$/gm,'<li>$1</li>')
+    .replace(/^[0-9]+\. (.+)$/gm,'<li>$1</li>')
+    .replace(/(<li>.*<\/li>\n?)+/g,'<ul>$&</ul>')
+    .replace(/\[(.+?)\]\((.+?)\)/g,'<a href="$2" target="_blank">$1</a>')
+    .replace(/`(.+?)`/g,'<code>$1</code>')
+    .replace(/^---$/gm,'<hr>')
+    .replace(/\n\n/g,'</p><p>')
+    .replace(/\n/g,'<br>')
+    .replace(/^(?!<[h|u|o|b|l|h])/,'<p>')
+    + '</p>';
+}
+
+// ═══════════════════════════════════
+//  PASSWORD
+// ═══════════════════════════════════
+function simpanToken(){
+  const t = document.getElementById('ghToken').value.trim();
+  if (!t) { showToast('⚠️ Token tidak boleh kosong','error'); return; }
+  localStorage.setItem('msl_gh_token', t);
+  document.getElementById('ghToken').value = '';
+  showToast('✅ Token GitHub disimpan!','success');
+}
+
+function gantiPassword(){
+  const lama=document.getElementById('pwdLama').value;
+  const baru=document.getElementById('pwdBaru').value;
+  const konfirm=document.getElementById('pwdKonfirm').value;
+  if(lama!==getPwd()){ showToast('⚠️ Kata sandi lama salah','error'); return; }
+  if(baru.length<8){ showToast('⚠️ Minimal 8 karakter','error'); return; }
+  if(baru!==konfirm){ showToast('⚠️ Konfirmasi tidak cocok','error'); return; }
+  localStorage.setItem(KEY_PWD,baru);
+  document.getElementById('pwdLama').value='';
+  document.getElementById('pwdBaru').value='';
+  document.getElementById('pwdKonfirm').value='';
+  showToast('✅ Kata sandi berhasil diperbarui','success');
+}
+
+// ═══════════════════════════════════
+//  VIEWS
+// ═══════════════════════════════════
+function showView(name){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('view-'+name).classList.add('active');
+  const navMap={dashboard:0,articles:1,settings:2};
+  const items=document.querySelectorAll('.nav-item');
+  if(navMap[name]!==undefined) items[navMap[name]].classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ═══════════════════════════════════
+//  UTILS
+// ═══════════════════════════════════
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
+function today(){ return new Date().toISOString().split('T')[0]; }
+function escHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function formatDate(d){
+  if(!d) return '—';
+  try{
+    const bulan=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+    const dt=new Date(d);
+    return dt.getDate()+' '+bulan[dt.getMonth()]+' '+dt.getFullYear();
+  }catch{ return d; }
+}
+
+let toastTimer;
+function showToast(msg, type='success'){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.className='show '+(type||'');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>el.className='',3000);
+}
+
+// Fix greeting ternary yang pecah di heredoc
+(function(){
+  const hr=new Date().getHours();
+  const sal=hr<11?'Selamat pagi':hr<15?'Selamat siang':hr<18?'Selamat sore':'Selamat malam';
+  document.getElementById('greetingText').textContent=sal+', Musmuliadi 👋';
+})();
+</script>
+</body>
+</html>
