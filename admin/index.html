@@ -878,14 +878,16 @@ function saveArticle(){
   renderDashboard();
   renderArticles();
 
-  // Publish ke GitHub jika status terbit
-  const savedArt = getArticles().find(a => a.id === (currentEditId || arts[arts.length-1].id));
+  // Publish ke GitHub
+  const lastId = currentEditId || arts[arts.length-1].id;
+  const savedArt = getArticles().find(a => a.id === lastId);
   if (savedArt) {
-    submitBtn && (submitBtn.disabled = true);
     showToast('⏳ Menyimpan ke GitHub...', 'success');
     publishToGitHub(savedArt).then(ok => {
       if (ok) showToast('✅ Tersimpan & dipublikasi ke website!', 'success');
       else    showToast('⚠️ Tersimpan lokal. Cek token GitHub di Pengaturan.', 'error');
+    }).catch(() => {
+      showToast('⚠️ Gagal terhubung ke GitHub.', 'error');
     });
   }
   showView('articles');
